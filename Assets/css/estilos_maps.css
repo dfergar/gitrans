@@ -1,0 +1,54 @@
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+#map {
+        height: 500px;
+        float: left;
+        width: 600px;
+        
+}
+       
+
+#right-panel {
+  font-family: 'Roboto','sans-serif';
+  line-height: 32px;
+  padding-left: 10px;
+}
+
+#right-panel select, #right-panel input {
+  font-size: 18px;
+  width: 80%;
+}
+
+#right-panel select {
+  width: 100%;
+}
+
+#right-panel i {
+  font-size: 12px;
+}
+
+#right-panel {
+  margin: 5px;
+  border-width: 2px;
+  width: 330px;
+  float: left;
+  text-align: left;
+  padding-top: 0px;
+}
+
+#directions-panel {
+  margin-left: 0px;
+  border-width: 2px;
+  width: 200px;
+  float: left;
+  text-align: left;
+  padding-top: 0px;  
+  
+  background-color: white;
+  padding-top: 5px;
+ 
+}
