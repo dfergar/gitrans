@@ -21,7 +21,7 @@ class Viajes extends CI_Controller {
      
                 $pages=4; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
-		$config['base_url'] = site_url('productos/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
+		$config['base_url'] = site_url('viajes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
 		$config['total_rows'] = $this->Viajes_model->filas();//calcula el número de filas  
 		$config['per_page'] = $pages; //Número de registros mostrados por páginas
                 $config['num_links'] = 20; //Número de links mostrados en la paginación
@@ -39,7 +39,7 @@ class Viajes extends CI_Controller {
                
 	}
    
-   function Crea_viaje()
+   function Crea_ruta()
    {
        
         $cabecera=$this->load->view('cabecera', Array(), TRUE);
@@ -47,10 +47,94 @@ class Viajes extends CI_Controller {
 
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
-        //$this->load->model('Viajes_model');
+        $this->load->model('Viajes_model');
+        
+        $this->form_validation->set_rules('Precio', 'Precio','trim|required');
+        
+        
+        if ($this->form_validation->run() == FALSE)
+        {
+            $contenido=$this->load->view('crea_ruta_view',Array(),true);
+            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+            
+        }
+        else
+        {
+                 
+            /*$ncargas=$_POST['ncargas'];                
+            $cargas=array();           
+            for($i=0;$i<$ncargas;$i++)
+            {
+                $cargas[]=$_POST['carga'.$i];
+            }
+
+            $ndescargas=$_POST['ndescargas'];
+            $descargas=array();            
+            for($i=0;$i<$ndescargas;$i++)
+            {
+                $descargas[]=$_POST['descarga'.$i];
+            }*/
+            
+            $datos=array(                
                 
+                'Tractora_id'   => $_POST['Tractora_id'],
+                'Remolque_id'   => $_POST['Remolque_id'],
+                'Conductor1_id' => $_POST['Conductor1_id'],
+                'Conductor2_id' => $_POST['Conductor2_id'],
+                'Origen'        => $_POST['Origen'],
+                'Destino'       => $_POST['Destino'],
+                'KM'            => $_POST['KM'],
+                'Cliente_id'    => $_POST['Cliente_id'],
+                'Precio'        => $_POST['Precio'],
+                'Estado'        => $_POST['Estado'],
+                'Observaciones' => $_POST['Observaciones']
+            );
+            
+            $this->Viajes_model->Insert_Viaje($datos);
+            
+            $id=$this->Viajes_model->Ultimo_Viaje();
+            for ($i=0;$i<$_POST['ncargas'];$i++)
+            {
+                $this->Viajes_model->Insert_Carga($id,$_POST['carga'.$i]);
+            }
+            for ($i=0;$i<$_POST['ndescargas'];$i++)
+            {
+                $this->Viajes_model->Insert_Descarga($id,$_POST['descarga'.$i]);
+            }
+            
+            
+            redirect('viajes');
+            
            
-        /*$this->form_validation->set_rules('Usuario', 'Usuario','trim|required|min_length[5]|max_length[12]|callback_ExisteUsuario');
+            
+        }
+        
+       
+    }
+    
+    function Crea_viaje($data)
+    {
+        
+        print_r($data);
+        $_POST['Origen']=$data['origen'];
+        $_POST['Destino']=$data['destino'];
+        $_POST['KM']=$data['KM'];    
+        
+        $cabecera=$this->load->view('cabecera', Array(), TRUE);
+        $pie=$this->load->view('pie', Array(), TRUE);         
+
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->model('Viajes_model');
+        
+              
+        
+            
+         $this->form_validation->set_rules('Precio', 'Precio','trim|required');
+        
+                
+          /* 
+        $this->form_validation->set_rules('Usuario', 'Usuario','trim|required|min_length[5]|max_length[12]|callback_ExisteUsuario');
         $this->form_validation->set_rules('Password', 'Contraseña','trim|required|matches[passconf]');
         $this->form_validation->set_rules('passconf', 'Confirmar Contraseña', 'trim|required');
         $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
@@ -77,74 +161,63 @@ class Viajes extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE)
         {
-            //$this->load->view('registro_view');
             $contenido=$this->load->view('crea_viaje_view',Array(),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
         else
         {
-            $data=array(/*
-                'Usuario' => $_POST['Usuario'],
-                'Password' => sha1($_POST['Password']),
-                'Nombre' => $_POST['Nombre'],
-                'Apellidos' =>$_POST['Apellidos'],
-                'Estado' => $_POST['Estado'],
-                'Dni' => $_POST['Dni'],
-                'Correo' => $_POST['Correo'],
-                'Direccion' => $_POST['Direccion'],
-                'CodigoPostal' => $_POST['CodigoPostal'],
-                'Provincia' => $_POST['Provincia']*/
+            $datos=array(
+                'Tractora_id'   => $_POST['Tractora_id'],
+                'Remolque_id'   => $_POST['Remolque_id'],
+                'Conductor1_id' => $_POST['Conductor1_id'],
+                'Conductor2_id' => $_POST['Conductor2_id'],
+                'Origen'        => $_POST['Origen'],
+                'Destino'       => $_POST['Destino'],
+                'KM'            => $_POST['KM'],
+                'Cliente_id'    => $_POST['Cliente_id'],
+                'Precio'        => $_POST['Precio'],
+                'Estado'        => $_POST['Estado'],
+                'Observaciones' => $_POST['Observaciones']
             );
-            $this->Viajes_model->Insert_Usuario($data);
+            
+            $this->Viajes_model->Insert_Viaje($datos);
             
             
-            redirect('Viajes');
+            redirect('viajes');
             
         }
        
     }
-   
-        
-   function ver_categoria($categoria, $comienzo=0)
-   {
-        $categorias=$this->Productos_model->get_categorias();
-        $cabecera=$this->load->view('cabecera', Array('categorias'=>$categorias, 'categoria'=>$categoria),  TRUE);
-        $pie=$this->load->view('pie', Array(), TRUE);
-        
-        $pages=4; //Número de registros mostrados por páginas
-        $this->load->library('pagination'); //Cargamos la librería de paginación
-        $config['base_url'] = site_url('productos/ver_categoria/'.$categoria); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
-        $config['total_rows'] = $this->Productos_model->filas_categoria($categoria);//calcula el número de filas  
-        $config['per_page'] = $pages; //Número de registros mostrados por páginas
-        $config['num_links'] = 20; //Número de links mostrados en la paginación
-        $config['first_link'] = 'Primera';//primer link
-        $config['last_link'] = 'Última';//último link
-        $config["uri_segment"] = 4;//el segmento de la paginación
-        $config['next_link'] = 'Siguiente';//siguiente link
-        $config['prev_link'] = 'Anterior';//anterior link
-        $this->pagination->initialize($config); //inicializamos la paginación		
-        //$cuerpo = $this->Productos_model->total_paginados($config['per_page'],$comienzo);
-                
-        $cuerpo=$this->Productos_model->get_prod_categoria($categoria, $config['per_page'],$comienzo);
-        $contenido=$this->load->view('productos_view',Array('productos'=>$cuerpo),true);
-       
-        $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
-   }
-   
-   function detalle($id)
-   {
-        $categorias=$this->Productos_model->get_categorias();
-        $cabecera=$this->load->view('cabecera', Array('categorias'=>$categorias),  TRUE);
-        $pie=$this->load->view('pie', Array(), TRUE);
-        
-        $cuerpo=$this->Productos_model->get_prod_id($id);
-        $contenido=$this->load->view('detalle_view',Array('detalles'=>$cuerpo),true);
-       
-        $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
-   }
-   
-   
+    
+    public function valid_dni($str)
+    {
+        $str = trim($str);  
+        $str = str_replace("-","",$str);  
+        $str = str_ireplace(" ","",$str);
+
+        if ( !preg_match("/^[0-9]{7,8}[a-zA-Z]{1}$/" , $str) )
+        {
+                return FALSE;
+        }
+        else
+        {
+                $n = substr($str, 0 , -1);		
+                $letter = substr($str,-1);
+                $letter2 = substr ("TRWAGMYFPDXBNJZSQVHLCKE", $n%23, 1); 
+                if(strtolower($letter) != strtolower($letter2))
+                        return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function ExisteUsuario($user)
+    {
+
+       if($this->Usuarios_model->ExisteUsuario($user)) return FALSE; 
+       else return TRUE;
+
+    }  
    
 }
 ?>

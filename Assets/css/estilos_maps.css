@@ -38,6 +38,7 @@ html, body {
   float: left;
   text-align: left;
   padding-top: 0px;
+  margin-bottom: 20px;
 }
 
 #directions-panel {

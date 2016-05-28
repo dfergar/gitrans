@@ -19,6 +19,60 @@ class Viajes_model extends CI_Model{
         return $data; 
    }
    
+   function get_vehiculos()
+    {
+        $consulta = $this->db->query("select idVehiculo, Matricula from Vehiculo");
+        $vehiculos=array();
+        foreach($consulta->result_array() as $fila)
+        {
+            $vehiculos[$fila['idVehiculo']]=$fila['Matricula'];
+        }
+        return $vehiculos;
+    }
+    
+    function get_conductores()
+    {
+        $consulta = $this->db->query("select idConductor, Nombre, Apellidos from Conductor");
+        $conductores=array();
+        foreach($consulta->result_array() as $fila)
+        {
+            $conductores[$fila['idConductor']]=$fila['Nombre']." ".$fila['Apellidos'];
+        }
+        return $conductores;
+    }
+    
+    function get_clientes()
+    {
+        $consulta = $this->db->query("select idCliente, Nombre from Cliente");
+        $clientes=array();
+        foreach($consulta->result_array() as $fila)
+        {
+            $clientes[$fila['idCliente']]=$fila['Nombre'];
+        }
+        return $clientes;
+    }
+    
+    public function Insert_Viaje($data)
+    {
+        $this->db->insert('Viaje', $data);
+    }
+    
+    function Insert_Carga($viaje,$lugar)
+    {
+        $this->db->query("insert into Carga (Viaje_id_carga, PobCarga_id) values ('$viaje','$lugar')");
+    }
+    
+    function Insert_Descarga($viaje,$lugar)
+    {
+        $this->db->query("insert into Descarga (Viaje_id_descarga, PobDescarga_id) values ('$viaje','$lugar')");
+    }
+    
+    function Ultimo_Viaje()
+    {
+        $consulta = $this->db->query("select max(idViaje) as id from Viaje");
+        return $consulta->row()->id;
+    }
+   
    function get_vehiculo($id)
     {
         $consulta = $this->db->query("SELECT * FROM Vehiculo WHERE idVehiculo='$id'");
@@ -42,11 +96,18 @@ class Viajes_model extends CI_Model{
         $consulta = $this->db->query("SELECT * FROM Tipo WHERE idTipo='$id'");
         return $consulta->row();
     }
+    
+    //obtenemos el total de filas para hacer la paginación
+    function filas()
+    {
+            $consulta = $this->db->query("SELECT * FROM Viaje");
+            return  $consulta->num_rows() ;
+    }
    
    
    
    
-   
+   /*
    function get_destacados($por_pagina,$segmento) 
     {
         $consulta = $this->db->query("SELECT * FROM Producto WHERE Destacado=1 LIMIT $segmento, $por_pagina");
@@ -91,7 +152,7 @@ class Viajes_model extends CI_Model{
     {
             $consulta = $this->db->query("SELECT * FROM Producto WHERE Categoria=$categoria");
             return  $consulta->num_rows() ;
-    }
+    }*/
      
     /**
      * Comprobar si hay disponibilidad de las unidades del producto solicitado
@@ -99,6 +160,7 @@ class Viajes_model extends CI_Model{
      * @param type $und:    unidades solicitadas
      * @return boolean
      */
+    /*
     function check_stock($id)
     {
         $consulta = $this->db->query("SELECT * FROM Producto WHERE idProducto=$id");
@@ -180,7 +242,7 @@ class Viajes_model extends CI_Model{
         return $dest;
                 
     }
-    
+    */
     
 }
 

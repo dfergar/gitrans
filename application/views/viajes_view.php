@@ -1,5 +1,5 @@
 <div class="cuerpo">
-   <a href="<?=site_url('Viajes/Crea_viaje')?>">Nuevo</a>
+   <a class="btn btn-primary" href="<?=site_url('Viajes/Crea_ruta')?>">Nuevo</a>
 <table class="table">
     
  <?php foreach ($viajes as $items): ?>
