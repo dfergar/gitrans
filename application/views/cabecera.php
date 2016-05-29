@@ -35,12 +35,20 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       
      <ul class="nav navbar-nav">
-          
-          <li <?php if(!isset($categoria)):?>class="active"<?php endif;?>>
-              <a href="<?=base_url()?>index.php">Viajes</a>
-          </li>
+        
+         <li <?php if(!isset($categoria)):?>class="active"<?php endif;?><?php if(!isset($categoria)):?>class="active"<?php endif;?>>
+             <a href="<?=base_url()?>index.php" >Viajes</a></li>
+         <li <?php if(isset($categoria)):if($categoria=="Vehiculos"):?> class="active"<?php endif; endif; ?>> 
+             <a href="<?=site_url('vehiculos');?>">Vehículos</a></li>
+         <li <?php if(isset($categoria)):if($categoria=="Conductores"):?> class="active"<?php endif; endif; ?>> 
+             <a href="<?=site_url('conductores');?>">Conductores</a></li>
+         <li <?php if(isset($categoria)):if($categoria=="Clientes"):?> class="active"<?php endif; endif; ?>> 
+             <a href="<?=site_url('clientes');?>">Clientes</a></li>
+         <li <?php if(isset($categoria)):if($categoria=="Estadisticas"):?> class="active"<?php endif; endif; ?>> 
+             <a href="<?=site_url('estadistica');?>">Estadísticas</a></li>
                 
       </ul>
+        
         
         
         

@@ -1,4 +1,18 @@
 .cuerpo{
-    height: auto;
+    height: 620px;
+}
+#datos select, #datos input{
+    width: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+#grabar{
+    margin-top: 10px;
+}
+
+label, legend{
+    font-size: 18px;
 }
 

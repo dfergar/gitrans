@@ -1,6 +1,6 @@
 <?php
 
-class Viajes_model extends CI_Model{
+class Vehiculos_model extends CI_Model{
 
    function __construct()
    {
@@ -8,9 +8,9 @@ class Viajes_model extends CI_Model{
        $this->load->database();
    }
            
-   function get_viajes($por_pagina,$segmento) 
+   function get_vehiculos($por_pagina,$segmento) 
    {
-        $consulta = $this->db->query("SELECT * FROM Viaje LIMIT $segmento, $por_pagina");
+        $consulta = $this->db->query("SELECT * FROM Vehiculo LIMIT $segmento, $por_pagina");
         $data=array();
         foreach($consulta->result() as $fila)
         {
@@ -19,16 +19,7 @@ class Viajes_model extends CI_Model{
         return $data; 
    }
    
-   function get_vehiculos()
-    {
-        $consulta = $this->db->query("select idVehiculo, Matricula from Vehiculo");
-        $vehiculos=array();
-        foreach($consulta->result_array() as $fila)
-        {
-            $vehiculos[$fila['idVehiculo']]=$fila['Matricula'];
-        }
-        return $vehiculos;
-    }
+   
     
     function get_conductores()
     {
@@ -60,7 +51,7 @@ class Viajes_model extends CI_Model{
     function Insert_Carga($data)
     {
         $this->db->insert('Carga', $data);
-    } 
+    }
     
     function Insert_Descarga($data)
     {
@@ -100,8 +91,8 @@ class Viajes_model extends CI_Model{
     //obtenemos el total de filas para hacer la paginación
     function filas()
     {
-            $consulta = $this->db->query("SELECT count(*) as filas FROM Viaje");
-            return  $consulta->row()->filas ;
+            $consulta = $this->db->query("SELECT count(*) as filas FROM Vehiculo");
+            return  $consulta->row()->filas;
     }
    
    

@@ -2,9 +2,7 @@
    <a class="btn btn-primary" href="<?=site_url('Viajes/Crea_ruta')?>">Nuevo</a>
 <table class="table">
     
- <?php foreach ($viajes as $items): ?>
-
-    <tr>
+        <tr>
         <th>Viaje</th>
         <th>Tractora</th>
         <th>Remolque</th>
@@ -18,6 +16,10 @@
         <th>Estado</th>
         <th>Obs</th>  
     </tr>
+    
+ <?php foreach ($viajes as $items): ?>
+
+    
     
     <tr>
         <td><?=$items->idViaje ?></td>

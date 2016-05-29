@@ -14,12 +14,12 @@ class Viajes extends CI_Controller {
    function index($comienzo=0)
 	{
 		
-                //$categorias=$this->Productos_model->get_categorias();
-                //$cabecera=$this->load->view('cabecera', Array('categorias'=>$categorias), TRUE);
-                $cabecera=$this->load->view('cabecera', Array(), TRUE);
+                
+                $categoria="Viajes";
+                $cabecera=$this->load->view('cabecera', $categoria, TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);               
      
-                $pages=4; //Número de registros mostrados por páginas
+                $pages=12; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
 		$config['base_url'] = site_url('viajes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
 		$config['total_rows'] = $this->Viajes_model->filas();//calcula el número de filas  
@@ -49,7 +49,13 @@ class Viajes extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('Viajes_model');
         
-        $this->form_validation->set_rules('Precio', 'Precio','trim|required');
+        $this->form_validation->set_rules('Precio', 'Precio','trim|required|numeric');
+        $this->form_validation->set_rules('fechaorigen', 'Fecha de llegada al origen del viaje','trim|required');
+        
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('numeric', 'El campo %s debe ser numérico');
+        
         
         
         if ($this->form_validation->run() == FALSE)
@@ -82,7 +88,11 @@ class Viajes extends CI_Controller {
                 'Conductor1_id' => $_POST['Conductor1_id'],
                 'Conductor2_id' => $_POST['Conductor2_id'],
                 'Origen'        => $_POST['Origen'],
+                'FechaOrigen'   => $_POST['fechaorigen'],
+                'HoraOrigen'    => $_POST['horaorigen'],
                 'Destino'       => $_POST['Destino'],
+                'FechaDestino'  => $_POST['fechadestino'],
+                'HoraDestino'   => $_POST['horadestino'],
                 'KM'            => $_POST['KM'],
                 'Cliente_id'    => $_POST['Cliente_id'],
                 'Precio'        => $_POST['Precio'],
@@ -95,11 +105,24 @@ class Viajes extends CI_Controller {
             $id=$this->Viajes_model->Ultimo_Viaje();
             for ($i=0;$i<$_POST['ncargas'];$i++)
             {
-                $this->Viajes_model->Insert_Carga($id,$_POST['carga'.$i]);
+                $data=array(
+                    'Viaje_id_carga'    => $id,
+                    'FechaCarga'        => $_POST['fechacarga'.$i],
+                    'HoraCarga'         => $_POST['horacarga'.$i],
+                    'PobCarga_id'       => $_POST['carga'.$i]
+                );
+                $this->Viajes_model->Insert_Carga($data);
+                
             }
             for ($i=0;$i<$_POST['ndescargas'];$i++)
             {
-                $this->Viajes_model->Insert_Descarga($id,$_POST['descarga'.$i]);
+                $data=array(
+                    'Viaje_id_descarga'    => $id,
+                    'FechaDescarga'        => $_POST['fechadescarga'.$i],
+                    'HoraDescarga'         => $_POST['horadescarga'.$i],
+                    'PobDescarga_id'       => $_POST['descarga'.$i]
+                );
+                $this->Viajes_model->Insert_Descarga($data);
             }
             
             
