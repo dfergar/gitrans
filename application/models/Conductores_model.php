@@ -28,8 +28,22 @@ class Conductores_model extends CI_Model{
             return  $consulta->row()->filas;
     }
    
+    public function Insert_Conductor($data)
+    {
+        $this->db->insert('Conductor', $data);
+    }
    
-   
+    function get_conductor($id)
+    {
+        $consulta = $this->db->query("SELECT * FROM Conductor WHERE idConductor='$id'");
+        return $consulta->row();
+    }
+    
+    public function Update_Conductor($id, $data)
+    {
+        $this->db->where('idConductor', $id);
+        $this->db->update('Conductor', $data);
+    }
    
 }
 

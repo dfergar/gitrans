@@ -1,6 +1,32 @@
 <?php
 class Usuarios_model extends CI_Model{
    
+    function __construct()
+   {
+       parent::__construct();
+       $this->load->database();
+   }
+           
+   function get_usuarios($por_pagina,$segmento) 
+   {
+        $consulta = $this->db->query("SELECT * FROM Usuario LIMIT $segmento, $por_pagina");
+        $data=array();
+        foreach($consulta->result() as $fila)
+        {
+            $data[] = $fila;
+        }
+        return $data; 
+   } 
+   
+    
+    
+    //obtenemos el total de filas para hacer la paginación
+    function filas()
+    {
+            $consulta = $this->db->query("SELECT count(*) as filas FROM Usuario");
+            return  $consulta->row()->filas;
+    }
+    
     function get_provincias()
     {
         $consulta = $this->db->query("select cod, nombre from tbl_provincias");

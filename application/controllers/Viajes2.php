@@ -49,6 +49,56 @@ class Viajes extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('Viajes_model');
         
+        $this->form_validation->set_rules('Origen', 'Origen','trim|required');
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        
+        if ($this->form_validation->run() == FALSE)
+        {
+            $contenido=$this->load->view('crea_ruta_view',Array(),true);
+            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+            
+        }
+        else
+        {
+                 
+            
+           
+                $datos=array(                
+                
+                
+                'Origen'        => $_POST['Origen'],                
+                'Destino'       => $_POST['Destino'],                
+                'KM'            => $_POST['KM'],
+                'ncargas'       => $_POST['ncargas'],
+                'ndescargas'    => $_POST['ndescargas'],
+              
+            );        
+                       
+           
+            
+            
+            $this->Crea_viaje($datos);
+            
+           
+            
+        }
+        
+       
+    }
+    
+    function Crea_viaje($data)
+    {
+        
+        print_r($data);
+                
+        $cabecera=$this->load->view('cabecera', Array(), TRUE);
+        $pie=$this->load->view('pie', Array(), TRUE);         
+
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->model('Viajes_model');
+        
+            
         $this->form_validation->set_rules('Precio', 'Precio','trim|required|numeric');
         $this->form_validation->set_rules('fechaorigen', 'Fecha de llegada al origen del viaje','trim|required');
         
@@ -56,11 +106,10 @@ class Viajes extends CI_Controller {
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('numeric', 'El campo %s debe ser numérico');
         
-        
-        
+                
         if ($this->form_validation->run() == FALSE)
         {
-            $contenido=$this->load->view('crea_ruta_view',Array(),true);
+            $contenido=$this->load->view('crea_viaje_view',Array('ruta' =>$data),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
@@ -117,86 +166,6 @@ class Viajes extends CI_Controller {
            
             
         }
-        
-       
-    }
-    
-    function Crea_viaje($data)
-    {
-        
-        print_r($data);
-        $_POST['Origen']=$data['origen'];
-        $_POST['Destino']=$data['destino'];
-        $_POST['KM']=$data['KM'];    
-        
-        $cabecera=$this->load->view('cabecera', Array(), TRUE);
-        $pie=$this->load->view('pie', Array(), TRUE);         
-
-        $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
-        
-        
-              
-        
-            
-         $this->form_validation->set_rules('Precio', 'Precio','trim|required');
-        
-                
-          /* 
-        $this->form_validation->set_rules('Usuario', 'Usuario','trim|required|min_length[5]|max_length[12]|callback_ExisteUsuario');
-        $this->form_validation->set_rules('Password', 'Contraseña','trim|required|matches[passconf]');
-        $this->form_validation->set_rules('passconf', 'Confirmar Contraseña', 'trim|required');
-        $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
-        $this->form_validation->set_rules('Apellidos', 'Apellidos','required');
-        $this->form_validation->set_rules('Dni', 'DNI', 'required|callback_valid_dni');
-        $this->form_validation->set_rules('Correo', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('Direccion', 'Dirección','required');
-        $this->form_validation->set_rules('CodigoPostal', 'Código Postal','required|numeric|exact_length[5]');
-         
-        
-        
-        
-        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-        $this->form_validation->set_message('ExisteUsuario', 'El nombre de usuaro ya existe en la base de datos, escoja otro');
-        $this->form_validation->set_message('min_length', 'El campo %s debe teneres un mínimo de 5 caracteres');
-        $this->form_validation->set_message('max_length', 'El campo %s debe teneres un máximo de 12 caracteres');
-        $this->form_validation->set_message('matches', 'Las contraseñas no coinciden');
-        $this->form_validation->set_message('valid_email', 'El campo %s no tiene un formato válido');
-        $this->form_validation->set_message('valid_dni', 'El campo %s no tiene un formato válido');
-        $this->form_validation->set_message('exact_length', 'El campo $s no tiene 5 digitos');
-        $this->form_validation->set_message('numeric', 'El campo %s debe ser exclusivamente numérico');*/
-
-        
-
-        if ($this->form_validation->run() == FALSE)
-        {
-            $contenido=$this->load->view('crea_viaje_view',Array(),true);
-            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
-            
-        }
-        else
-        {
-            $datos=array(
-                'Tractora_id'   => $_POST['Tractora_id'],
-                'Remolque_id'   => $_POST['Remolque_id'],
-                'Conductor1_id' => $_POST['Conductor1_id'],
-                'Conductor2_id' => $_POST['Conductor2_id'],
-                'Origen'        => $_POST['Origen'],
-                'Destino'       => $_POST['Destino'],
-                'KM'            => $_POST['KM'],
-                'Cliente_id'    => $_POST['Cliente_id'],
-                'Precio'        => $_POST['Precio'],
-                'Estado'        => $_POST['Estado'],
-                'Observaciones' => $_POST['Observaciones']
-            );
-            
-            $this->Viajes_model->Insert_Viaje($datos);
-            
-            
-            redirect('viajes');
-            
-        }
-       
     }
     
     public function valid_dni($str)

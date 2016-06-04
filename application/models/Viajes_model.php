@@ -79,22 +79,14 @@ class Viajes_model extends CI_Model{
         return $consulta->row();
     }
     
-    function get_conductor($id)
-    {
-        $consulta = $this->db->query("SELECT * FROM Conductor WHERE idConductor='$id'");
-        return $consulta->row();
-    }
     
-    function get_cliente($id)
-    {
-        $consulta = $this->db->query("SELECT * FROM Cliente WHERE idCliente='$id'");
-        return $consulta->row();
-    }
+    
+   
     
     function get_tipo($id)
     {
         $consulta = $this->db->query("SELECT * FROM Tipo WHERE idTipo='$id'");
-        return $consulta->row();
+        return $consulta->row()->Clase;
     }
     
     //obtenemos el total de filas para hacer la paginación

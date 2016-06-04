@@ -42,13 +42,14 @@ html, body {
 }
 
 #directions-panel {
+  height: 550px;
   margin-left: 0px;
   border-width: 2px;
   width: 200px;
   float: left;
   text-align: left;
   padding-top: 0px;  
-  
+  overflow-y: scroll;
   background-color: white;
   padding-top: 5px;
  

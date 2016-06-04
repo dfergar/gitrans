@@ -1,6 +1,6 @@
 <?php
 
-class Vehiculos extends CI_Controller {
+class Clientes extends CI_Controller {
 
    function __construct()
    {
@@ -14,15 +14,15 @@ class Vehiculos extends CI_Controller {
    function index($comienzo=0)
 	{
 		
-                
-                $categoria="Vehiculos";               
+                if($this->session->userdata('Perfil')!='admin') redirect('login');
+                $categoria="Clientes";
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
-                $pie=$this->load->view('pie', Array(), TRUE);   
+                $pie=$this->load->view('pie', Array(), TRUE);               
      
-                $pages=4; //Número de registros mostrados por páginas
+                $pages=12; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
-		$config['base_url'] = site_url('vehiculos/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
-		$config['total_rows'] = $this->Vehiculos_model->filas();//calcula el número de filas  
+		$config['base_url'] = site_url('clientes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
+		$config['total_rows'] = $this->Clientes_model->filas();//calcula el número de filas  
 		$config['per_page'] = $pages; //Número de registros mostrados por páginas
                 $config['num_links'] = 20; //Número de links mostrados en la paginación
  		$config['first_link'] = 'Primera';//primer link
@@ -32,25 +32,25 @@ class Vehiculos extends CI_Controller {
 		$config['prev_link'] = 'Anterior';//anterior link
 		$this->pagination->initialize($config); //inicializamos la paginación
                 
-		$cuerpo = $this->Vehiculos_model->get_vehiculos($config['per_page'],$comienzo);	
-                $contenido=$this->load->view('vehiculos_view',Array('vehiculos'=>$cuerpo),true);
+		$cuerpo = $this->Clientes_model->get_clientes($config['per_page'],$comienzo);	
+                $contenido=$this->load->view('clientes_view',Array('clientes'=>$cuerpo),true);
                 $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 
                
 	}
-        
-        function Crea_Vehiculo()
+   
+   function Crea_Cliente()
     {
         
                 
-        $categoria="Vehiculo";
+        $categoria="Clientes";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');    
             
-        $this->form_validation->set_rules('Matricula', 'Matricula','trim|required');
+        $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
                 
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
@@ -59,40 +59,41 @@ class Vehiculos extends CI_Controller {
                 
         if ($this->form_validation->run() == FALSE)
         {
-            $contenido=$this->load->view('crea_vehiculo_view',Array(),true);
+            $contenido=$this->load->view('crea_cliente_view',Array(),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
         else
         {
-           
+            
             $datos=array(                
                 
-                'Tipo_id'       => $_POST['Tipo_id'],
-                'Matricula'     => $_POST['Matricula'],
-                'MarcaModelo'   => $_POST['MarcaModelo'],
-                'Nbastidor'     => $_POST['Nbastidor'],
-                'Fmatri'        => $_POST['Fmatri'],
-                'Fitv'          => $_POST['Fitv']
-                
+                'Nombre'        => $_POST['Nombre'],
+                'CIF'           => $_POST['CIF'],
+                'Domicilio'     => $_POST['Domicilio'],
+                'CP'            => $_POST['CP'],
+                'Poblacion'     => $_POST['Poblacion'],
+                'Provincia'     => $_POST['Provincia'],
+                'Telefono'      => $_POST['Telefono'],
+                'Email'         => $_POST['Email']
                 
             );
             
-            $this->Vehiculos_model->Insert_Vehiculo($datos);
+            $this->Clientes_model->Insert_Cliente($datos);
             
             
-            redirect('vehiculos');
+            redirect('clientes');
             
            
             
         }
     }
         
-    function Modifica_Vehiculo($id)
+    function Modifica_Cliente($id)
     {
         
         
-        $categoria="Vehiculos";
+        $categoria="Clientes";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
@@ -101,16 +102,19 @@ class Vehiculos extends CI_Controller {
         
         if(!$_POST)
         {
-            $vehiculo=$this->Vehiculos_model->get_vehiculo($id);
-            $_POST['Tipo_id']   =   $vehiculo->Tipo_id;
-            $_POST['Matricula'] =   $vehiculo->Matricula;
-            $_POST['MarcaModelo'] = $vehiculo->MarcaModelo;
-            $_POST['Nbastidor'] =   $vehiculo->Nbastidor;
-            $_POST['Fmatri'] =      $vehiculo->Fmatri;
-            $_POST['Fitv'] =        $vehiculo->Fitv;
+            $cliente=$this->Clientes_model->get_cliente($id);
+            $_POST['Nombre']=$cliente->Nombre;
+            $_POST['CIF']=$cliente->CIF;
+            $_POST['Domicilio']=$cliente->Domicilio;           
+            $_POST['CP']=$cliente->CP;
+            $_POST['Poblacion']=$cliente->Poblacion;
+            $_POST['Provincia']=$cliente->Provincia;
+            $_POST['Telefono']=$cliente->Telefono;
+            $_POST['Email']=$cliente->Email;
+            
         }
         
-         $this->form_validation->set_rules('Matricula', 'Matricula','trim|required');
+        $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
                 
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
@@ -119,7 +123,7 @@ class Vehiculos extends CI_Controller {
                 
         if ($this->form_validation->run() == FALSE)
         {
-            $contenido=$this->load->view('crea_vehiculo_view',Array(),true);
+            $contenido=$this->load->view('crea_cliente_view',Array(),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
@@ -128,29 +132,26 @@ class Vehiculos extends CI_Controller {
             
             $datos=array(                
                 
-                'Tipo_id'       =>   $_POST['Tipo_id'],
-                'Matricula'     =>   $_POST['Matricula'],
-                'MarcaModelo'   =>   $_POST['MarcaModelo'],
-                'Nbastidor'     =>   $_POST['Nbastidor'],  
-                'Fmatri'        =>   $_POST['Fmatri'],     
-                'Fitv'          =>   $_POST['Fitv']       
+                'Nombre'        => $_POST['Nombre'],
+                'CIF'           => $_POST['CIF'],
+                'Domicilio'     => $_POST['Domicilio'],
+                'CP'            => $_POST['CP'],
+                'Poblacion'     => $_POST['Poblacion'],
+                'Provincia'     => $_POST['Provincia'],
+                'Telefono'      => $_POST['Telefono'],
+                'Email'         => $_POST['Email']
                 
             );
             
-            $this->Vehiculos_model->Update_Vehiculo($id, $datos);
+            $this->Clientes_model->Update_Cliente($id, $datos);
             
             
-            redirect('vehiculos');
+            redirect('clientes');
             
            
             
         }
     }
-        
-    
-   
-  
    
 }
 ?>
-

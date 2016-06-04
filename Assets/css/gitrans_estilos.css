@@ -1,5 +1,6 @@
 .cuerpo{
-    height: 620px;
+    height: 550px;
+    widt: 73%;
 }
 #datos select, #datos input{
     width: 200px;
@@ -15,4 +16,14 @@
 label, legend{
     font-size: 18px;
 }
-
+#submit, #validar{
+    margin-top: 10px;
+}
+#login{
+    width: 300px;
+}
+.errores{
+    width: 97%;
+    text-align: center;
+    margin: auto;
+}

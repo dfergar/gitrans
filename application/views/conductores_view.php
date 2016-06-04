@@ -1,5 +1,5 @@
 <div class="cuerpo">
-   <a class="btn btn-primary" href="<?=site_url('Conductores/Crea_conductor')?>">Nuevo</a>
+   <a class="btn btn-primary" href="<?=site_url('Conductores/Crea_conductor')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
 <table class="table">
     
         <tr>
@@ -18,6 +18,8 @@
         <td><?=$items->Nombre ?></td>
         <td><?=$items->Apellidos ?></td>
         <td><?=$items->Telefono ?></td>
+        <td><a class="btn btn-danger" href="<?=site_url('Conductores/Modifica_conductor/'.$items->idConductor)?>"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+            
     </tr>
     
 <?php endforeach; ?>

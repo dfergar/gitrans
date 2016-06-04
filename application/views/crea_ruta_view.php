@@ -51,10 +51,10 @@
 
                     <input id="ncargas" name="ncargas" type="hidden" value="0" />
                     <input id="ndescargas" name="ndescargas" type="hidden" value="0" />
-                    <input id="km" name="KM" type="hidden" value="0" />
-                    
+                    <input type="hidden" id="Precio" name="Precio">
+                    <input id="km" name="KM" type="hidden"> 
                     <input class="btn btn-success" id="submit" value="Comprobar ruta">
-                    <br><br>
+                    
                     <input class="btn btn-success" id="validar" name="validar" value="Validar ruta" disabled>
                 
                 
@@ -74,11 +74,11 @@
                
                   <div class="form-inline">     
                 <label for="Tractora_id">Tractora</label>
-                <?=form_dropdown('Tractora_id', $this->Viajes_model->get_vehiculos(), set_value('Tractora_id'), 'class="form-control"');?>
+                <?=form_dropdown('Tractora_id', $this->Vehiculos_model->get_vehiculos_tipo(1), set_value('Tractora_id'), 'class="form-control"');?>
                   
                
                     <label>Remolque</label>
-                <?=form_dropdown('Remolque_id', $this->Viajes_model->get_vehiculos(), set_value('Remolque_id'), 'class="form-control"');?>
+                <?=form_dropdown('Remolque_id', $this->Vehiculos_model->get_vehiculos_tipo(2), set_value('Remolque_id'), 'class="form-control"');?>
                 </div>
                 <div class="form-inline">     
                     <label>Conductor 1</label>
@@ -162,7 +162,7 @@
                     </div>                    
                     <label>Kms</label>                
                     <input type="number" name="KM" class ="form-control" value="<?=set_value('KM')?>" size="50" readonly/>
-
+                     
                 <?php endif;?>
                  <div class="form-inline"> 
                     <label>Cliente</label>

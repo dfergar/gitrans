@@ -55,6 +55,6 @@ $route['translate_uri_dashes'] = FALSE;*/
 
 $route['viaje/pagina/(:num)'] = 'viajes';//cuando no sea la primera página
 $route['viaje/pagina'] = 'viajes';//cuando sea la primera página
-$route['default_controller'] = 'viajes';
+$route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

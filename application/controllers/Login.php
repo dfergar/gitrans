@@ -2,6 +2,7 @@
 class Login extends CI_Controller {
     function index()
     {
+        
         //$categorias=$this->Productos_model->get_categorias();
         //$cabecera=$this->load->view('cabecera', Array('categorias'=>$categorias), TRUE);
         $cabecera=$this->load->view('cabecera', Array(), TRUE);
@@ -30,20 +31,32 @@ class Login extends CI_Controller {
         }
         else
         {
-            //$this->load->view('login_ok_view');
+            
             $username = $this->input->post('Usuario');
             $usuario = $this->Usuarios_model->GetUsuario($username);
             $data_user=array(
-                'Usuario'=>$usuario->Usuario,
-                'idUsuario'=>$usuario->idUsuario,                
+                'Usuario'   =>$usuario->Usuario,
+                'idUsuario' =>$usuario->idUsuario, 
+                'Perfil'    =>$usuario->Perfil
             ) ;
                                           
             $this->session->set_userdata($data_user); 
             
-            redirect('index.php');
-            //$data['title'] = 'Administrador'; 
-            //$data['user'] = $username;  // = $this->session->userdata('user');
-           
+            /*if($usuario->Perfil=='admin')
+            {
+                redirect('viajes');
+                //$data['title'] = 'Administrador'; 
+                //$data['user'] = $username;  // = $this->session->userdata('user');
+            }*/
+            switch ($usuario->Perfil)
+            {
+                case 'admin': redirect('viajes');
+                    break;
+                case 'Conductor': redirect('vehiculos');
+                    break;
+                //$data['title'] = 'Administrador'; 
+                //$data['user'] = $username;  // = $this->session->userdata('user');
+            }
             
         }
     }
@@ -52,7 +65,9 @@ class Login extends CI_Controller {
         {
             
             $user=$_POST['Usuario'];
-            $pass=sha1($_POST['Password']);
+            //$pass=sha1($_POST['Password']);para codificar pass
+            $pass=$_POST['Password'];
+            
                 
             if($this->Usuarios_model->ValidarUsuario($user,$pass)) return TRUE;
             else return FALSE;
@@ -61,8 +76,9 @@ class Login extends CI_Controller {
         
         function CerrarSesion()
         {
-            $this->session->unset_userdata('Usuario', 'idUsuario');           
-            redirect('productos');
+            
+            session_destroy();
+            redirect('login');
         }
         
     

@@ -33,20 +33,24 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
+    
      <ul class="nav navbar-nav">
         
-         <li <?php if(!isset($categoria)):?>class="active"<?php endif;?><?php if(!isset($categoria)):?>class="active"<?php endif;?>>
-             <a href="<?=base_url()?>index.php" >Viajes</a></li>
-         <li <?php if(isset($categoria)):if($categoria=="Vehiculos"):?> class="active"<?php endif; endif; ?>> 
-             <a href="<?=site_url('vehiculos');?>">Vehículos</a></li>
-         <li <?php if(isset($categoria)):if($categoria=="Conductores"):?> class="active"<?php endif; endif; ?>> 
-             <a href="<?=site_url('conductores');?>">Conductores</a></li>
-         <li <?php if(isset($categoria)):if($categoria=="Clientes"):?> class="active"<?php endif; endif; ?>> 
-             <a href="<?=site_url('clientes');?>">Clientes</a></li>
-         <li <?php if(isset($categoria)):if($categoria=="Estadisticas"):?> class="active"<?php endif; endif; ?>> 
-             <a href="<?=site_url('estadistica');?>">Estadísticas</a></li>
-                
+         <?php if (null !==$this->session->userdata('Usuario')):?>
+            <li <?php if(isset($categoria)):if($categoria=="Viajes"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('viajes');?>">Viajes</a></li>         
+            <li <?php if(isset($categoria)):if($categoria=="Vehiculos"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('vehiculos');?>">Vehículos</a></li>
+            <li <?php if(isset($categoria)):if($categoria=="Conductores"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('conductores');?>">Conductores</a></li>
+            <li <?php if(isset($categoria)):if($categoria=="Clientes"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('clientes');?>">Clientes</a></li>            
+            <?php if($this->session->userdata('Perfil')=='admin'):?>
+            <li <?php if(isset($categoria)):if($categoria=="Usuarios"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('usuarios')?>">Usuarios</a></li><?php endif;?>  
+            <li <?php if(isset($categoria)):if($categoria=="Estadisticas"):?> class="active"<?php endif; endif; ?>> 
+                <a href="<?=site_url('estadistica');?>">Estadísticas</a></li>
+         <?php endif;?>
       </ul>
         
         
@@ -58,9 +62,10 @@
             
           <?php if (null !==$this->session->userdata('Usuario')):?>
                     <li><a href="<?=site_url('usuario/ver_usuario/'.$this->session->userdata('Usuario'))?>"><?=$this->session->userdata('Usuario')?></a> </li>
-                    <li><a href="<?=site_url('login/CerrarSesion');?>">Cerrar sesión</a></li>
+                    <li><a href="<?=site_url('usuario/ver_usuario/'.$this->session->userdata('Perfil'))?>"><?=$this->session->userdata('Perfil')?></a> </li>
+                    <li><a href="<?=site_url('login/CerrarSesion');?>">Cerrar sesión</a></li>                    
           <?php else:?>
-                    <li><a href="<?=site_url('registro')?>">Registro</a></li>
+                    
                     <li><a href="<?=site_url('login')?>">Login</a></li>
                     
           <?php endif?>

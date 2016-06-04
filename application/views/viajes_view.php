@@ -25,12 +25,12 @@
         <td><?=$items->idViaje ?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Tractora_id)->Matricula ?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Remolque_id)->Matricula ?></td>
-        <td><?=$this->Viajes_model->get_conductor($items->Conductor1_id)->Nombre ?></td>         
-        <td><?php if (isset($this->Viajes_model->get_conductor($items->Conductor2_id)->Nombre)):echo $this->Viajes_model->get_conductor($items->Conductor2_id)->Nombre;endif;?></td>
+        <td><?=$this->Conductores_model->get_conductor($items->Conductor1_id)->Nombre ?></td>         
+        <td><?php if (isset($this->Conductores_model->get_conductor($items->Conductor2_id)->Nombre)):echo $this->Conductores_model->get_conductor($items->Conductor2_id)->Nombre;endif;?></td>
         <td><?=$items->Origen ?></td>
         <td><?=$items->Destino ?></td>
         <td><?=$items->KM ?></td>
-        <td><?=$this->Viajes_model->get_cliente($items->Cliente_id)->Nombre ?></td>    
+        <td><?=$this->Clientes_model->get_cliente($items->Cliente_id)->Nombre ?></td>    
         <td><?=$items->Precio ?></td>
         <td><?=$items->Estado ?></td>
         <td><?=$items->Observaciones ?></td>

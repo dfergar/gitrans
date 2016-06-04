@@ -11,7 +11,7 @@
     <body>
         <div class="container"><?=$cabecera?></div>
         
-        <div class="container"><?=$contenido?></div>
+        <div class="container" ><?=$contenido?></div>
         <div class="container"><?php //echo $this->pagination->create_links() ?></div>
         
         <div clas="container"><?=$pie?></div>        
