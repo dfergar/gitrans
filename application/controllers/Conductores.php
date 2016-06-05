@@ -5,7 +5,7 @@ class Conductores extends CI_Controller {
    function __construct()
    {
        parent::__construct();
-       
+       if(!$this->session->userdata('Perfil')) redirect('login');     
       
    }
    
@@ -14,7 +14,7 @@ class Conductores extends CI_Controller {
    function index($comienzo=0)
     {
 		
-                
+           
         $categoria="Conductores";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);   

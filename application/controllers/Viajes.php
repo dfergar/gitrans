@@ -5,7 +5,7 @@ class Viajes extends CI_Controller {
    function __construct()
    {
        parent::__construct();
-       
+        if(!$this->session->userdata('Perfil')) redirect('login');
       
    }
    
@@ -14,7 +14,7 @@ class Viajes extends CI_Controller {
    function index($comienzo=0)
 	{
 		
-                if($this->session->userdata('Perfil')!='admin') redirect('login');
+                
                 $categoria="Viajes";
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);               
@@ -41,8 +41,8 @@ class Viajes extends CI_Controller {
    
    function Crea_ruta()
    {
-       
-        $cabecera=$this->load->view('cabecera', Array(), TRUE);
+        $categoria="Viajes";
+        $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
         $this->load->helper(array('form', 'url'));

@@ -32,7 +32,7 @@ class Viajes_model extends CI_Model{
     
     function get_conductores()
     {
-        $consulta = $this->db->query("select idConductor, Nombre, Apellidos from Conductor");
+        $consulta = $this->db->query("select idConductor, Nombre, Apellidos from Conductor order by apellidos asc");
         $conductores=array();
         foreach($consulta->result_array() as $fila)
         {

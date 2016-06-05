@@ -10,7 +10,7 @@ class Conductores_model extends CI_Model{
            
    function get_conductores($por_pagina,$segmento) 
    {
-        $consulta = $this->db->query("SELECT * FROM Conductor LIMIT $segmento, $por_pagina");
+        $consulta = $this->db->query("SELECT * FROM Conductor order by Apellidos LIMIT $segmento, $por_pagina");
         $data=array();
         foreach($consulta->result() as $fila)
         {

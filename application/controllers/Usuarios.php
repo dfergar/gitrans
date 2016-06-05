@@ -5,7 +5,7 @@ class Usuarios extends CI_Controller {
    function __construct()
    {
        parent::__construct();
-       
+       if($this->session->userdata('Perfil')!='admin') redirect('login');
       
    }
    
@@ -39,6 +39,104 @@ class Usuarios extends CI_Controller {
                
 	}
         
+        function Crea_Usuario()
+    {
+        
+                
+        $categoria="Usuarios";
+        $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
+        $pie=$this->load->view('pie', Array(), TRUE);         
+
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');    
+            
+        $this->form_validation->set_rules('Usuario', 'Usuario','trim|required');
+                
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        
+        
+                
+        if ($this->form_validation->run() == FALSE)
+        {
+            $contenido=$this->load->view('crea_usuario_view',Array(),true);
+            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+            
+        }
+        else
+        {
+            
+            $datos=array(                
+                
+                'Usuario'       => $_POST['Usuario'],
+                'Password'      => $_POST['Password'],
+                'Perfil'        => $_POST['Perfil']
+                
+            );
+            
+            $this->Usuarios_model->Insert_Usuario($datos);
+            
+            
+            redirect('usuarios');
+            
+           
+            
+        }
+    }
+        
+    function Modifica_Usuario($id)
+    {
+        
+        
+        $categoria="Usuarios";
+        $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
+        $pie=$this->load->view('pie', Array(), TRUE);         
+
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');  
+        
+        if(!$_POST)
+        {
+            $usuario=$this->Usuarios_model->get_usuario($id);
+            $_POST['Usuario']=$usuario->Usuario;
+            $_POST['Password']=$usuario->Password;
+            $_POST['Perfil']=$usuario->Perfil;    
+            
+        }
+        
+        $this->form_validation->set_rules('Usuario', 'Usuario','trim|required');
+                
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        
+        
+                
+        if ($this->form_validation->run() == FALSE)
+        {
+            $contenido=$this->load->view('crea_usuario_view',Array(),true);
+            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+            
+        }
+        else
+        {
+            
+            $datos=array(                
+                
+                'Usuario'       => $_POST['Usuario'],
+                'Password'      => $_POST['Password'],
+                'Perfil'        => $_POST['Perfil']
+                
+            );            
+            
+            $this->Usuarios_model->Update_Usuario($id, $datos);
+            
+            
+            redirect('usuarios');
+            
+           
+            
+        }
+    }
     
    
   

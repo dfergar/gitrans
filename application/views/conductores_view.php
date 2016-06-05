@@ -1,5 +1,7 @@
 <div class="cuerpo">
-   <a class="btn btn-primary" href="<?=site_url('Conductores/Crea_conductor')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+   <?php  if($this->session->userdata('Perfil')=='admin'):?>
+    <a class="btn btn-primary" href="<?=site_url('Conductores/Crea_conductor')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+    <?php endif;?>
 <table class="table">
     
         <tr>
@@ -18,8 +20,9 @@
         <td><?=$items->Nombre ?></td>
         <td><?=$items->Apellidos ?></td>
         <td><?=$items->Telefono ?></td>
+        <?php  if($this->session->userdata('Perfil')=='admin'):?>
         <td><a class="btn btn-danger" href="<?=site_url('Conductores/Modifica_conductor/'.$items->idConductor)?>"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-            
+        <?php endif;?>   
     </tr>
     
 <?php endforeach; ?>

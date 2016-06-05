@@ -5,16 +5,17 @@ class Clientes extends CI_Controller {
    function __construct()
    {
        parent::__construct();
+       if(!$this->session->userdata('Perfil')) redirect('login');
        
       
    }
    
     
    
-   function index($comienzo=0)
+   function index($comienzo=0, $orden='idCliente')
 	{
 		
-                if($this->session->userdata('Perfil')!='admin') redirect('login');
+                
                 $categoria="Clientes";
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);               
@@ -32,7 +33,7 @@ class Clientes extends CI_Controller {
 		$config['prev_link'] = 'Anterior';//anterior link
 		$this->pagination->initialize($config); //inicializamos la paginación
                 
-		$cuerpo = $this->Clientes_model->get_clientes($config['per_page'],$comienzo);	
+		$cuerpo = $this->Clientes_model->get_clientes($config['per_page'],$comienzo, $orden);	
                 $contenido=$this->load->view('clientes_view',Array('clientes'=>$cuerpo),true);
                 $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 

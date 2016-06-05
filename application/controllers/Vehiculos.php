@@ -5,7 +5,7 @@ class Vehiculos extends CI_Controller {
    function __construct()
    {
        parent::__construct();
-       
+       if(!$this->session->userdata('Perfil')) redirect('login');
       
    }
    
@@ -43,7 +43,7 @@ class Vehiculos extends CI_Controller {
     {
         
                 
-        $categoria="Vehiculo";
+        $categoria="Vehiculos";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
@@ -145,6 +145,15 @@ class Vehiculos extends CI_Controller {
            
             
         }
+    }
+    
+    function itv_caducada($fecha)
+    {
+        if($fecha<=now())
+        {
+            return true;
+        }
+        else return false;
     }
         
     

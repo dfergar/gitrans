@@ -37,13 +37,7 @@ class Usuarios_model extends CI_Model{
         }
         return $provincias;
     }
-    
-    function get_provincia($id)
-    {
-        $consulta = $this->db->query("SELECT * FROM tbl_provincias WHERE cod=$id");
-        return $consulta->row()->nombre;
-    }
-    
+        
     function ValidarUsuario($user,$password)
     {         //   Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
         $query = $this->db->where('Usuario',$user);   //   La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
@@ -74,7 +68,7 @@ class Usuarios_model extends CI_Model{
        
     }
     
-    public function UpdateUsuario($id, $data)
+    public function Update_Usuario($id, $data)
     {
         $this->db->where('idUsuario', $id);
         $this->db->update('Usuario', $data);
@@ -84,18 +78,26 @@ class Usuarios_model extends CI_Model{
     {
         $this->db->delete('Usuario', array('idUsuario' => $id));
     }
-    
-    function GetPedidos($id)
-    {
-        $consulta=$this->db->query("SELECT * FROM Pedido WHERE Usuario_idUsuario=$id");
-        return $consulta->result();
         
-    }
     
     function SetPassword($user, $pass)
     {
         $this->db->query("UPDATE Usuario SET Password='$pass' WHERE Usuario='$user'");
     }
+    
+    function get_provincia($id)
+    {
+        $consulta = $this->db->query("SELECT * FROM tbl_provincias WHERE cod=$id");
+        return $consulta->row()->nombre;
+    }
+    
+     function get_usuario($id)
+    {
+        $consulta = $this->db->query("SELECT * FROM Usuario WHERE idUsuario='$id'");
+        return $consulta->row();
+    }
+    
+    
             
 }
 ?>

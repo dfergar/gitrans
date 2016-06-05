@@ -1,5 +1,8 @@
 <div class="cuerpo">
-   <a class="btn btn-primary" href="<?=site_url('Viajes/Crea_ruta')?>">Nuevo</a>
+    <?php  if($this->session->userdata('Perfil')=='admin'):?>
+    <a  href="<?=site_url('Viajes/Crea_ruta')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/rutas.png" width="40" aria-hidden="true"></img></a>
+    <?php endif;?>
+
 <table class="table">
     
         <tr>
@@ -14,7 +17,7 @@
         <th>Cliente</th>
         <th>Precio</th>
         <th>Estado</th>
-        <th>Obs</th>  
+        
     </tr>
     
  <?php foreach ($viajes as $items): ?>
@@ -30,10 +33,10 @@
         <td><?=$items->Origen ?></td>
         <td><?=$items->Destino ?></td>
         <td><?=$items->KM ?></td>
-        <td><?=$this->Clientes_model->get_cliente($items->Cliente_id)->Nombre ?></td>    
-        <td><?=$items->Precio ?></td>
+        <td><?=$this->Clientes_model->get_cliente($items->Cliente_id)->Nombre ?></td>  
+        <td><?=$this->session->userdata('Perfil')=='admin' || $this->session->userdata('Perfil')=='Operador'?$items->Precio:"Oculto";?></td>
         <td><?=$items->Estado ?></td>
-        <td><?=$items->Observaciones ?></td>
+        <td><a class="btn btn-info" href="<?=site_url('Viajes/ver_viaje/'.$items->idViaje)?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
                
         
     </tr>

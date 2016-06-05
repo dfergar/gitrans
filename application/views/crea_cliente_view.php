@@ -20,6 +20,8 @@
                         <input type="text" name="CIF" class ="form-control" value="<?=set_value('CIF')?>" size="50" />
                         <label for="Domicilio">Domicilio</label>
                         <input type="text" name="Domicilio" class ="form-control" value="<?=set_value('Domicilio')?>" size="50" />
+                        <label for="CP">CP</label>
+                        <input type="text" name="CP" class ="form-control" value="<?=set_value('CP')?>" size="50" />
                         <label for="Poblacion">Poblacion</label>
                         <input type="text" name="Poblacion" class ="form-control" value="<?=set_value('Poblacion')?>" size="50" />
                         <label for="Provincia">Provincia</label>
