@@ -1,9 +1,65 @@
-.cuerpo{
-    height: 550px;
-    widt: 73%;
+* {
+   font-family: Futura; 
 }
+.logo{
+    width: 80px;
+    height: 80px;
+    margin-right: 0px;    
+    display: inline;
+       
+}
+.titulo{    
+    width: auto;
+    text-align: left; 
+    display: inline;
+    
+    
+}
+.empresa{
+    font-size: 60px;
+    
+}
+.actividad{
+    font-size: 40px;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 70%;
+  /* Set the fixed height of the footer here */
+  height: 20px;
+  background-color: #f5f5f5;
+}
+
+.footer p{
+    padding:2px 2px;
+}
+
+.cabecera{
+    font-size: 20px;
+    font-weight: bold;
+    font-color: yellow;
+}
+.cuerpo{
+    
+    
+}
+
 #datos select, #datos input{
     width: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+#datos #Observaciones{
+    width: 1200px;
     margin-right: 10px;
     margin-bottom: 10px;
 }

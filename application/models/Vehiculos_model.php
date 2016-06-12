@@ -8,9 +8,9 @@ class Vehiculos_model extends CI_Model{
        $this->load->database();
    }
            
-   function get_vehiculos($por_pagina,$segmento) 
+   function get_vehiculos($por_pagina,$segmento, $orden) 
    {
-        $consulta = $this->db->query("SELECT * FROM Vehiculo LIMIT $segmento, $por_pagina");
+        $consulta = $this->db->query("SELECT * FROM Vehiculo order by $orden asc LIMIT $segmento, $por_pagina");
         $data=array();
         foreach($consulta->result() as $fila)
         {

@@ -79,7 +79,13 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'bd_gitrans',
-	'dbdriver' => 'mysqli',
+	/*
+         * **** ACCESO A GERION ****
+        'username' => '2daw1516_danielf',
+	'password' => 'fgard%73',
+	'database' => '2daw1516_danielf01',
+         */ 
+        'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

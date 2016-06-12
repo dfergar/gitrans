@@ -8,7 +8,7 @@
 
                <div class="form-group">
 
-                   <div class="alert alert-danger">
+                   <div class="alert alert-danger errores" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
                        <?php echo validation_errors(); ?>
                    </div>
 
@@ -26,6 +26,7 @@
                         <input type="text" name="Poblacion" class ="form-control" value="<?=set_value('Poblacion')?>" size="50" />
                         <label for="Provincia">Provincia</label>
                         <?=form_dropdown('Provincia', $this->Usuarios_model->get_provincias(), set_value('Provincia'), 'class="form-control"');?>
+                        <br>
                         <label for="Telefono">Teléfono</label>
                         <input type="text" name="Telefono" class ="form-control" value="<?=set_value('Telefono')?>" size="50" />
                         <label for="Email">Email</label>

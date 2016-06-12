@@ -1,12 +1,12 @@
 <div class="cuerpo">
     <a class="btn btn-primary" href="<?=site_url('Usuarios/Crea_usuario')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-<table class="table">
+<table class="table table-bordered table-striped table-condensed">
     
         <tr>
-        <th>Código</th>
-        <th>Usuario</th>
-        <th>Password</th>
-        <th>Perfil</th>
+        <th><a href="<?=site_url('Usuarios/index/0/'.'idUsuario')?>">Código</a></th>
+        <th><a href="<?=site_url('Usuarios/index/0/'.'Usuario')?>">Usuario</a></th>
+        <th><a href="<?=site_url('Usuarios/index/0/'.'Password')?>">Password</a></th>
+        <th><a href="<?=site_url('Usuarios/index/0/'.'Perfil')?>">Perfil</a></th>
     </tr>
     
  <?php foreach ($usuarios as $items): ?>

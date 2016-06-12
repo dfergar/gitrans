@@ -8,7 +8,7 @@
 
                <div class="form-group">
 
-                   <div class="alert alert-danger">
+                   <div class="alert alert-danger errores" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
                        <?php echo validation_errors(); ?>
                    </div>
 

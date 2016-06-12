@@ -1,6 +1,7 @@
 <div class="container"> 
-
- <h3>Daniel Fernández</h3>
-
+    <footer class="">
+        <p class="text-muted">Daniel Fernández</p>
+    </footer>
+    
 </div>
 

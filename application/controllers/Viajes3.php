@@ -11,7 +11,7 @@ class Viajes extends CI_Controller {
    
     
    
-   function index($comienzo=0, $orden="FechaOrigen")
+   function index($comienzo=0)
 	{
 		
                 
@@ -32,7 +32,7 @@ class Viajes extends CI_Controller {
 		$config['prev_link'] = 'Anterior';//anterior link
 		$this->pagination->initialize($config); //inicializamos la paginación
                 
-		$cuerpo = $this->Viajes_model->get_viajes($config['per_page'],$comienzo, $orden);	
+		$cuerpo = $this->Viajes_model->get_viajes($config['per_page'],$comienzo);	
                 $contenido=$this->load->view('viajes_view',Array('viajes'=>$cuerpo),true);
                 $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 
@@ -98,7 +98,7 @@ class Viajes extends CI_Controller {
                 'KM'            => $_POST['KM'],
                 'Cliente_id'    => $_POST['Cliente_id'],
                 'Precio'        => $_POST['Precio'],
-                'Estado'        => $estados[$_POST['Estado']],
+                'Estado'        => $_POST['Estado'],
                 'Observaciones' => $_POST['Observaciones']
             );
             
@@ -167,13 +167,13 @@ class Viajes extends CI_Controller {
             $_POST['Precio']        =   $viaje->Precio;
             $_POST['Estado']        =   $viaje->Estado;
             $_POST['Observaciones'] =   $viaje->Observaciones;
-            $_POST['KM']            =   $viaje->KM;
+           
             $_POST['Origen']        =   $viaje->Origen;
-            $_POST['fechaorigen']   =   $viaje->FechaOrigen;
-            $_POST['horaorigen']    =   $viaje->HoraOrigen;
+            $_POST['FechaOrigen']   =   $viaje->FechaOrigen;
+            $_POST['HoraOrigen']    =   $viaje->HoraOrigen;
             $_POST['Destino']       =   $viaje->Destino;
-            $_POST['fechadestino']  =   $viaje->FechaDestino;
-            $_POST['horadestino']   =   $viaje->HoraDestino;
+            $_POST['FechaDestino']  =   $viaje->FechaDestino;
+            $_POST['HoraDestino']   =   $viaje->HoraDestino;
             $cargas=$this->Viajes_model->get_cargas($id);
             $descargas=$this->Viajes_model->get_descargas($id);
             $ncargas=$this->Viajes_model->get_ncargas($id);
@@ -183,20 +183,7 @@ class Viajes extends CI_Controller {
             $indice=0;
             foreach($cargas as $carga)
             {   
-                $_POST['idcarga'.$indice]=$carga->idCarga;
                 $_POST['carga'.$indice]=$carga->PobCarga_id;
-                $_POST['fechacarga'.$indice]=$carga->FechaCarga;
-                $_POST['horacarga'.$indice]=$carga->HoraCarga;
-                
-                $indice++;
-            }
-            $indice=0;
-            foreach($descargas as $descarga)
-            {   
-                $_POST['iddescarga'.$indice]=$descarga->idDescarga;
-                $_POST['descarga'.$indice]=$descarga->PobDescarga_id;
-                $_POST['fechadescarga'.$indice]=$descarga->FechaDescarga;
-                $_POST['horadescarga'.$indice]=$descarga->HoraDescarga;
                 $indice++;
             }
             
@@ -205,7 +192,7 @@ class Viajes extends CI_Controller {
         if ($this->form_validation->run() == FALSE)
         {
             
-            $contenido=$this->load->view('modifica_ruta_view',Array('estados' => $estados),true);
+            $contenido=$this->load->view('crea_ruta_view',Array('estados' => $estados),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
@@ -227,33 +214,33 @@ class Viajes extends CI_Controller {
                 'KM'            => $_POST['KM'],
                 'Cliente_id'    => $_POST['Cliente_id'],
                 'Precio'        => $_POST['Precio'],
-                'Estado'        => $estados[$_POST['Estado']],
+                'Estado'        => $_POST['Estado'],
                 'Observaciones' => $_POST['Observaciones']
             );
             
-            $this->Viajes_model->Update_Viaje($id, $datos);
+            $this->Viajes_model->Insert_Viaje($datos);
             
-            
+            $id=$this->Viajes_model->Ultimo_Viaje();
             for ($i=0;$i<$_POST['ncargas'];$i++)
             {
-                $idcarga=$_POST['idcarga'.$i];
-                $data=array(                   
+                $data=array(
+                    'Viaje_id_carga'    => $id,
                     'FechaCarga'        => $_POST['fechacarga'.$i],
                     'HoraCarga'         => $_POST['horacarga'.$i],
                     'PobCarga_id'       => $_POST['carga'.$i]
                 );
-                $this->Viajes_model->Update_Carga($idcarga,$data);
+                $this->Viajes_model->Insert_Carga($data);
                 
             }
             for ($i=0;$i<$_POST['ndescargas'];$i++)
             {
-                $iddescarga=$_POST['iddescarga'.$i];
                 $data=array(
+                    'Viaje_id_descarga'    => $id,
                     'FechaDescarga'        => $_POST['fechadescarga'.$i],
                     'HoraDescarga'         => $_POST['horadescarga'.$i],
                     'PobDescarga_id'       => $_POST['descarga'.$i]
                 );
-                $this->Viajes_model->Update_Descarga($iddescarga,$data);
+                $this->Viajes_model->Insert_Descarga($data);
             }
             
             
@@ -266,37 +253,52 @@ class Viajes extends CI_Controller {
        
     }
     
-    function Modifica_estado($id)
+    
+    
+    
+    /*public function ExisteUsuario($user)
     {
+
+       if($this->Usuarios_model->ExisteUsuario($user)) return FALSE; 
+       else return TRUE;
+
+    }  
+    */
+    function Modifica_viaje($id)
+    {
+        
+        
         $categoria="Viajes";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
         $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
-        $this->load->model('Viajes_model');
-        
-        $this->form_validation->set_rules('Estado', 'Estado','trim|required');
-       
-        
-        
-        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-       
-        
-        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO');
+        $this->load->library('form_validation');  
         
         if(!$_POST)
         {
             $viaje=$this->Viajes_model->get_viaje($id);
-            
+            $_POST['Tractora_id']   =   $viaje->Tractora_id;
+            $_POST['Remolque_id']   =   $viaje->Remolque_id;
+            $_POST['Conductor1_id'] =   $viaje->Conductor1_id;
+            $_POST['Conductor2_id'] =   $viaje->Conductor2_id;
+            $_POST['Cliente']       =   $viaje->Cliente;
+            $_POST['Precio']        =   $viaje->Precio;
             $_POST['Estado']        =   $viaje->Estado;
             $_POST['Observaciones'] =   $viaje->Observaciones;
-        }   
+            
+        }
         
+        $this->form_validation->set_rules('Precio', 'Precio','trim|required|numeric');
+                
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('numeric', 'El campo %s debe ser numérico');
+        
+        
+                
         if ($this->form_validation->run() == FALSE)
         {
-            
-            $contenido=$this->load->view('modifica_estado_view',Array('estados' => $estados),true);
+            $contenido=$this->load->view('Modifica_viaje_view',Array(),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
@@ -305,22 +307,115 @@ class Viajes extends CI_Controller {
             
             $datos=array(                
                 
+            'Tractora_id'   =>  $_POST['Tractora_id'],  
+            'Remolque_id'   =>  $_POST['Remolque_id'],  
+            'Conductor1_id' =>  $_POST['Conductor1_id'],
+            'Conductor2_id' =>  $_POST['Conductor2_id'],
+            'Cliente'       =>  $_POST['Cliente'],
+            'Precio'        =>  $_POST['Precio'],
+            'Estado'        =>  $_POST['Estado'],
+            'Observaciones' =>  $_POST['Observaciones']
                 
-                'Estado'        => $estados[$_POST['Estado']],
-                'Observaciones' => $_POST['Observaciones']
             );
             
             $this->Viajes_model->Update_Viaje($id, $datos);
             
+            
+            redirect('viajes');
+            
            
+            
+        }
+    }
+        
+    function Modifica_rutar($id)
+    {
+        
+        
+        $categoria="Viajes";
+        $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
+        $pie=$this->load->view('pie', Array(), TRUE);         
+
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');  
+        
+        if(!$_POST)
+        {
+            $viaje=$this->Viajes_model->get_viaje($id);            
+            $_POST['Origen']        =   $viaje->Origen;
+            $_POST['FechaOrigen']   =   $viaje->FechaOrigen;
+            $_POST['HoraOrigen']    =   $viaje->HoraOrigen;
+            $_POST['Destino']       =   $viaje->Destino;
+            $_POST['FechaDestino']  =   $viaje->FechaDestino;
+            $_POST['HoraDestino']   =   $viaje->HoraDestino;
+            $cargas=$this->Viajes_model->get_cargas($id);
+            $descargas=$this->Viajes_model->getdes_cargas($id);
+        }
+        
+                
+        
+                
+        if ($this->form_validation->run() == FALSE)
+        {
+            $contenido=$this->load->view('modifica_ruta_view',Array(),true);
+            $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+            
+        }
+        else
+        {
+            
+            $datos=array(                
+                
+           
+                'Origen'        => $_POST['Origen'],
+                'FechaOrigen'   => $_POST['fechaorigen'],
+                'HoraOrigen'    => $_POST['horaorigen'],
+                'Destino'       => $_POST['Destino'],
+                'FechaDestino'  => $_POST['fechadestino'],
+                'HoraDestino'   => $_POST['horadestino'],
+                'KM'            => $_POST['KM'],
+                'Cliente_id'    => $_POST['Cliente_id'],
+                'Precio'        => $_POST['Precio'],
+                'Estado'        => $_POST['Estado'],
+                'Observaciones' => $_POST['Observaciones']
+                
+            );
+            
+            $this->Viajes_model->Update_Viaje($id, $datos);
+                                 
+            $this->Viajes_model->Delete_etapas_viaje($id);
+            for ($i=0;$i<$_POST['ncargas'];$i++)
+            {
+                $data=array(
+                    'Viaje_id_carga'    => $id,
+                    'FechaCarga'        => $_POST['fechacarga'.$i],
+                    'HoraCarga'         => $_POST['horacarga'.$i],
+                    'PobCarga_id'       => $_POST['carga'.$i]
+                );
+                $this->Viajes_model->Insert_Carga($data);
+                
+            }
+            for ($i=0;$i<$_POST['ndescargas'];$i++)
+            {
+                $data=array(
+                    'Viaje_id_descarga'    => $id,
+                    'FechaDescarga'        => $_POST['fechadescarga'.$i],
+                    'HoraDescarga'         => $_POST['horadescarga'.$i],
+                    'PobDescarga_id'       => $_POST['descarga'.$i]
+                );
+                $this->Viajes_model->Insert_Descarga($data);
+            }
             
             
             redirect('viajes');
+            
+           
+            
         }
+    }
+    
+    
     
    
-    
-    
-    
-    }   
 }
+?>

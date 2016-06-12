@@ -11,7 +11,7 @@ class Vehiculos extends CI_Controller {
    
     
    
-   function index($comienzo=0)
+   function index($comienzo=0, $orden="idVehiculo")
 	{
 		
                 
@@ -32,7 +32,7 @@ class Vehiculos extends CI_Controller {
 		$config['prev_link'] = 'Anterior';//anterior link
 		$this->pagination->initialize($config); //inicializamos la paginación
                 
-		$cuerpo = $this->Vehiculos_model->get_vehiculos($config['per_page'],$comienzo);	
+		$cuerpo = $this->Vehiculos_model->get_vehiculos($config['per_page'],$comienzo, $orden);	
                 $contenido=$this->load->view('vehiculos_view',Array('vehiculos'=>$cuerpo),true);
                 $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 
@@ -110,7 +110,7 @@ class Vehiculos extends CI_Controller {
             $_POST['Fitv'] =        $vehiculo->Fitv;
         }
         
-         $this->form_validation->set_rules('Matricula', 'Matricula','trim|required');
+        $this->form_validation->set_rules('Matricula', 'Matricula','trim|required');
                 
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');

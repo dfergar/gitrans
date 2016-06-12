@@ -1,6 +1,6 @@
 
     <body>
-        <div class="alert alert-danger errores">
+        <div class="alert alert-danger errores" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
             <?php echo validation_errors(); ?>
         </div>
         <div class="container" id="login">

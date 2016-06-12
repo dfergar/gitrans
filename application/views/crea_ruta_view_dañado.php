@@ -9,60 +9,12 @@
     <link rel="stylesheet" href="<?=base_url()?>Assets/css/estilos_maps.css" type="text/css">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
    
-    <title>Creador de rutas</title>
+    <title>Modificar rutas</title>
     </head>
     <body>
         
-        
+          
     
-     <div id="map" class="col-md-6" <?php if ($_POST):?>style='display:none;'<?php endif;?>></div>  
-     
-     <form action="" method="POST" onsubmit="nombrar();">   
-        <div id="right-panel" class="col-md-3" <?php if ($_POST):?>style='display:none;'<?php endif;?>>
-        
-            
-                <div id="ruta" >
-        
-                    <h3>SELECCIONAR RUTA</h3>
-                    <label>ORIGEN</label>
-                    <br>
-                    <input type="text" name="Origen" id="start" placeholder="calle, cp, ciudad, país..." />
-                    <br><br>
-                    <label>CARGAS</label> 
-                    <button type="button" id="addcarga" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-
-                    <br>
-                    
-                    <div id="cargas" style="font-size: 18px;"></div>
-                    <br>
-
-
-                    <label>DESCARGAS</label>
-                    <button type="button" id="adddescarga" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-
-                    <br>
-
-                    <div id="descargas" style="font-size: 18px;"></div>
-                    <br>
-
-                    <label>DESTINO</label>
-                    <input type="text" name="Destino" id="end" placeholder="calle, cp, ciudad, país..." />
-                    <br><br>
-
-                    <input id="ncargas" name="ncargas" type="hidden" value="0" />
-                    <input id="ndescargas" name="ndescargas" type="hidden" value="0" />
-                    <input type="hidden" id="Precio" name="Precio">
-                    <input id="km" name="KM" type="hidden"> 
-                    <input class="btn btn-success" id="submit" value="Comprobar ruta">
-                    
-                    <input class="btn btn-success" id="validar" name="validar" value="Validar ruta" disabled>
-                
-                
-                   
-                </div>
-                
-        </div>
-        <div id="directions-panel" class="col-md-2" <?php if ($_POST):?>style='display:none;'<?php endif;?>></div>
         <div class="col-md-12" display id="datos" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
             
 
@@ -116,6 +68,7 @@
                                     <div class="form-group">
                                         <label>Fecha</label>
                                         <input type="date" name="fechacarga<?=$i?>" class ="form-control" value="<?=set_value('fechacarga'.$i)?>" />
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label>Hora</label>
@@ -170,10 +123,10 @@
                     <label>Precio</label>
                     <input type="number" name="Precio" class ="form-control" value="<?=set_value('Precio')?>" size="50"/>
                     <label>Estado</label>
-                    <?=form_dropdown('Estado', $estados, set_value('Estado'), 'class="form-control"');?>
+                    <input type="text" name="Estado" class ="form-control" value="<?=set_value('Estado')?>" size="50" />
                  </div>
                 <label>Observaciones</label>
-                <input type="text" name="Observaciones" id="Observaciones" class ="form-control" value="<?=set_value('Observaciones')?>" size="200">
+                <textarea name="Observaciones" class ="form-control" value="<?=set_value('Observaciones')?>" size="50"></textarea>
                 <input class="btn btn-success" id="grabar" type="submit" value="Grabar Viaje">
 
                 

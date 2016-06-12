@@ -2,7 +2,7 @@
     <?php  if($this->session->userdata('Perfil')=='admin'):?>
     <a class="btn btn-primary" href="<?=site_url('Clientes/Crea_cliente')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
     <?php endif;?>
-<table class="table">
+<table class="table table-bordered table-striped table-condensed">
     
         <tr>
         <th><a href="<?=site_url('Clientes/index/0/'.'idCliente')?>">Código</a></th>

@@ -8,19 +8,20 @@
 
                <div class="form-group">
 
-                   <div class="alert alert-danger">
+                   <div class="alert alert-danger errores" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
                        <?php echo validation_errors(); ?>
                    </div>
 
                    <div class="form-inline">  
                        
-                        <label for="Tipo_id"></label>
+                        <label for="Tipo_id">Tipo</label>
                         <?=form_dropdown('Tipo_id', $this->Vehiculos_model->get_tipos(), set_value('Tipo_id'), 'class="form-control"');?>
                         <label for="Matricula">Matricula</label>
                         <input type="text" name="Matricula" class ="form-control" value="<?=set_value('Matricula')?>" size="50" />
                         <label for="MarcaModelo">Marca/Modelo</label>
                         <input type="text" name="MarcaModelo" class ="form-control" value="<?=set_value('MarcaModelo')?>" size="50" />
-                        <label for="Nbastidor">NºBastidor</label>
+                         <br>
+                        <label for="Nbastidor">NºBastidor</label>                       
                         <input type="text" name="Nbastidor" class ="form-control" value="<?=set_value('Nbastidor')?>" size="50" />
                         <label for="Fmatri">Fecha Matriculación</label>
                         <input type="date" name="Fmatri" class ="form-control" value="<?=set_value('Fmatri')?>" size="50" />

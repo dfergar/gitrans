@@ -24,7 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/gitrans/';
-
+/*
+ **** ACCESO A GERION ********** 
+ * $config['base_url'] = 'http://iessansebastian.com/alumnos/2daw1516/danielf';
+ */
 /*
 |--------------------------------------------------------------------------
 | Index File

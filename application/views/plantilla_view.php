@@ -7,6 +7,8 @@
         <link rel="stylesheet" type="text/css" href="<?=base_url()?>Assets/css/gitrans_estilos.css"/>
         
         <script src="<?=base_url()?>Assets/js/jquery-1.12.0.js" type="text/javascript"></script>
+        
+        
     </head>
     <body>
         <div class="container"><?=$cabecera?></div>

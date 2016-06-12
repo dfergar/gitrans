@@ -2,13 +2,13 @@
    <?php  if($this->session->userdata('Perfil')=='admin'):?>
     <a class="btn btn-primary" href="<?=site_url('Conductores/Crea_conductor')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
     <?php endif;?>
-<table class="table">
+<table class="table table-bordered table-striped table-condensed">
     
         <tr>
-        <th>Código</th>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>Teléfono</th>
+        <th><a href="<?=site_url('Conductores/index/0/'.'idConductor')?>">Código</a></th>
+        <th><a href="<?=site_url('Conductores/index/0/'.'Nombre')?>">Nombre</a></th>        
+        <th><a href="<?=site_url('Conductores/index/0/'.'Apellidos')?>">Apellidos</a></th>
+        <th><a href="<?=site_url('Conductores/index/0/'.'Telefono')?>">Teléfono</a></th>
     </tr>
     
  <?php foreach ($conductores as $items): ?>

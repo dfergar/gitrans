@@ -15,10 +15,10 @@
         
         
     
-     <div id="map" class="col-md-6" <?php if ($_POST):?>style='display:none;'<?php endif;?>></div>  
+     <div id="map" class="col-md-6" <?php if ($_POST):?>style='d-isplay:none;'<?php endif;?>></div>  
      
      <form action="" method="POST" onsubmit="nombrar();">   
-        <div id="right-panel" class="col-md-3" <?php if ($_POST):?>style='display:none;'<?php endif;?>>
+        <div id="right-panel" class="col-md-3" <?php if ($_POST):?>style='d-isplay:none;'<?php endif;?>>
         
             
                 <div id="ruta" >
@@ -26,15 +26,31 @@
                     <h3>SELECCIONAR RUTA</h3>
                     <label>ORIGEN</label>
                     <br>
-                    <input type="text" name="Origen" id="start" placeholder="calle, cp, ciudad, país..." />
+                    <input type="text" name="Origen" id="start" placeholder="calle, cp, ciudad, país..." class ="form-control" value="<?=set_value('Origen')?>" size="50"/>
                     <br><br>
                     <label>CARGAS</label> 
                     <button type="button" id="addcarga" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 
                     <br>
+                    <div id="cargas" style="font-size: 18px;">
+                        <?php if($_POST):
+
+                            for ($i=0;$i<$_POST['ncargas'];$i++):?>
+
+                                    <div>
+                                        <input type="text" class="waypoints form-control" placeholder="calle, cp, ciudad, país..." name="carga<?=$i?>"value="<?=set_value('carga'.$i)?>" size="50">
+                                        <button class="btn btn-primary" onclick="borrar(this)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        
+                                    </div>
+
+                            <?php endfor;
+                        endif;?>    
+                    </div> 
                     
-                    <div id="cargas" style="font-size: 18px;"></div>
                     <br>
+                    
 
 
                     <label>DESCARGAS</label>
@@ -42,11 +58,25 @@
 
                     <br>
 
-                    <div id="descargas" style="font-size: 18px;"></div>
+                    <div id="descargas" style="font-size: 18px;">
+                        <?php if($_POST):
+
+                            for ($i=0;$i<$_POST['ndescargas'];$i++):?>
+
+                                    <div>
+                                        <input type="text" class="waypoints form-control" placeholder="calle, cp, ciudad, país..." name="descarga<?=$i?>"value="<?=set_value('descarga'.$i)?>" size="50">
+                                        <button class="btn btn-primary" onclick="borrar(this)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+
+                            <?php endfor;
+                        endif;?>
+                    </div>
                     <br>
 
                     <label>DESTINO</label>
-                    <input type="text" name="Destino" id="end" placeholder="calle, cp, ciudad, país..." />
+                    <input type="text" name="Destino" id="end" placeholder="calle, cp, ciudad, país..."class ="form-control" value="<?=set_value('Destino')?>" size="50" />
                     <br><br>
 
                     <input id="ncargas" name="ncargas" type="hidden" value="0" />
@@ -62,8 +92,8 @@
                 </div>
                 
         </div>
-        <div id="directions-panel" class="col-md-2" <?php if ($_POST):?>style='display:none;'<?php endif;?>></div>
-        <div class="col-md-12" display id="datos" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
+        <div id="directions-panel" class="col-md-2" <?php if ($_POST):?>style='d-isplay:none;'<?php endif;?>></div>
+        <div class="col-md-12" id="datos" <?php if (!$_POST):?>style='display:none;'<?php endif;?>>
             
 
             <div class="form-group">
@@ -72,21 +102,20 @@
                     <?php echo validation_errors(); ?>
                 </div>
                
-                  <div class="form-inline">     
-                <label for="Tractora_id" style="margin-right: 35px;">Tractora</label>
-                <?=form_dropdown('Tractora_id', $this->Vehiculos_model->get_vehiculos_tipo(1), set_value('Tractora_id'), 'class="form-control"');?>
-                  
-               
+                <div class="form-inline">     
+                    <label for="Tractora_id" style="margin-right: 35px;">Tractora</label>
+                    <?=form_dropdown('Tractora_id', $this->Vehiculos_model->get_vehiculos_tipo(1), set_value('Tractora_id'), 'class="form-control"');?>
+
                     <label style="margin-right: 19px;">Remolque</label>
-                <?=form_dropdown('Remolque_id', $this->Vehiculos_model->get_vehiculos_tipo(2), set_value('Remolque_id'), 'class="form-control"');?>
+                    <?=form_dropdown('Remolque_id', $this->Vehiculos_model->get_vehiculos_tipo(2), set_value('Remolque_id'), 'class="form-control"');?>
                 </div>
                 <div class="form-inline">     
                     <label>Conductor 1</label>
-                <?=form_dropdown('Conductor1_id', $this->Viajes_model->get_conductores(), set_value('Conductor_id'), 'class="form-control"');?>
+                    <?=form_dropdown('Conductor1_id', $this->Viajes_model->get_conductores(), set_value('Conductor_id'), 'class="form-control"');?>
                
                     
                     <label>Conductor 2</label>
-                <?=form_dropdown('Conductor2_id', $this->Viajes_model->get_conductores(), set_value('Conductor2_id'), 'class="form-control"');?>
+                    <?=form_dropdown('Conductor2_id', $this->Viajes_model->get_conductores(), set_value('Conductor2_id'), 'class="form-control"');?>
                 </div>
                    
                     <?php if ($_POST):?>
@@ -169,11 +198,11 @@
                     <?=form_dropdown('Cliente_id', $this->Viajes_model->get_clientes(), set_value('Cliente_id'), 'class="form-control"');?>
                     <label>Precio</label>
                     <input type="number" name="Precio" class ="form-control" value="<?=set_value('Precio')?>" size="50"/>
-                    <label>Estado</label>
+                    <label>Estado</label>                    
                     <?=form_dropdown('Estado', $estados, set_value('Estado'), 'class="form-control"');?>
                  </div>
                 <label>Observaciones</label>
-                <input type="text" name="Observaciones" id="Observaciones" class ="form-control" value="<?=set_value('Observaciones')?>" size="200">
+                <input type="text" name="Observaciones" id="Observaciones" class ="form-control" value="<?=set_value('Observaciones')?>" size="200"></input>
                 <input class="btn btn-success" id="grabar" type="submit" value="Grabar Viaje">
 
                 

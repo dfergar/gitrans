@@ -10,13 +10,23 @@
 </head>
 <body>
 
-<div class="container">
-  <div class="page-header">
-      <a href="<?=site_url()?>" style="text-decoration:none;"><h1>GITRANS Gestión Integral del Transporte</h1></a>    
-  </div>
-</div>
 
-<div class="container-fluid">
+  <div class="page-header">
+      <a href="<?=site_url()?>" style="text-decoration:none;">
+        
+          <div class="logo">
+              <img class="logo" src="<?=base_url()?>Assets/images/camion_deep.jpg" aria-hidden="true">
+          </div>
+            <div class="titulo">
+             <span class="empresa" >GITRANS</span>
+             <span class="actividad">Gestión Integral del Transporte</span>   
+            </div> 
+        
+      </a>
+  </div>
+
+
+<div class="container-fluid cabecera">
    
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -49,7 +59,7 @@
             <li <?php if(isset($categoria)):if($categoria=="Usuarios"):?> class="active"<?php endif; endif; ?>> 
                 <a href="<?=site_url('usuarios')?>">Usuarios</a></li><?php endif;?>  
             <li <?php if(isset($categoria)):if($categoria=="Estadisticas"):?> class="active"<?php endif; endif; ?>> 
-                <a href="<?=site_url('estadistica');?>">Estadísticas</a></li>
+                <a href="<?=site_url('estadisticas');?>">Estadísticas</a></li>
          <?php endif;?>
       </ul>
         
@@ -61,8 +71,8 @@
       <ul class="nav navbar-nav navbar-right">
             
           <?php if (null !==$this->session->userdata('Usuario')):?>
-                    <li><a href="<?=site_url('usuario/ver_usuario/'.$this->session->userdata('Usuario'))?>"><?=$this->session->userdata('Usuario')?></a> </li>
-                    <li><a href="<?=site_url('usuario/ver_usuario/'.$this->session->userdata('Perfil'))?>"><?=$this->session->userdata('Perfil')?></a> </li>
+                    <li><a href=""><?=$this->session->userdata('Usuario')?></a> </li>
+                    <li><a href=""><?=$this->session->userdata('Perfil')?></a> </li>
                     <li><a href="<?=site_url('login/CerrarSesion');?>">Cerrar sesión</a></li>                    
           <?php else:?>
                     

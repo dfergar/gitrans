@@ -3,20 +3,21 @@
     <a  href="<?=site_url('Viajes/Crea_ruta')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/rutas.png" width="40" aria-hidden="true"></img></a>
     <?php endif;?>
 
-<table class="table">
+<table class="table table-bordered table-striped table-condensed">
     
         <tr>
-        <th>Viaje</th>
-        <th>Tractora</th>
-        <th>Remolque</th>
-        <th>Chófer 1</th>
-        <th>Chófer 2</th>
-        <th>Origen</th>
-        <th>Destino</th>
-        <th>Km</th>
-        <th>Cliente</th>
-        <th>Precio</th>
-        <th>Estado</th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'idViaje')?>">Viaje</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'FechaOrigen')?>">Fecha</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Tractora_id')?>">Tractora</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Remolque_id')?>">Remolque</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Conductor1_id')?>">Chófer 1</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Conductor2_id')?>">Chófer 2</th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Origen')?>">Origen</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Destino')?>">Destino</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'KM')?>">Km</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Cliente_id')?>">Cliente</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Precio')?>">Precio</a></th>
+            <th><a href="<?=site_url('Viajes/index/0/'.'Origen')?>">Estado</a></th>
         
     </tr>
     
@@ -26,6 +27,7 @@
     
     <tr>
         <td><?=$items->idViaje ?></td>
+        <td><?=date("d-m-Y", strtotime($items->FechaOrigen))?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Tractora_id)->Matricula ?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Remolque_id)->Matricula ?></td>
         <td><?=$this->Conductores_model->get_conductor($items->Conductor1_id)->Nombre ?></td>         
@@ -36,7 +38,7 @@
         <td><?=$this->Clientes_model->get_cliente($items->Cliente_id)->Nombre ?></td>  
         <td><?=$this->session->userdata('Perfil')=='admin' || $this->session->userdata('Perfil')=='Operador'?$items->Precio:"Oculto";?></td>
         <td><?=$items->Estado ?></td>
-        <td><a class="btn btn-info" href="<?=site_url('Viajes/ver_viaje/'.$items->idViaje)?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+        <td><a class="btn btn-info" href="<?=site_url('Viajes/Ver_viaje/'.$items->idViaje)?>"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
                
         
     </tr>

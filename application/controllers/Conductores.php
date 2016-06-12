@@ -11,7 +11,7 @@ class Conductores extends CI_Controller {
    
     
    
-   function index($comienzo=0)
+   function index($comienzo=0, $orden='idConductor')
     {
 		
            
@@ -32,7 +32,7 @@ class Conductores extends CI_Controller {
         $config['prev_link'] = 'Anterior';//anterior link
         $this->pagination->initialize($config); //inicializamos la paginación
 
-        $cuerpo = $this->Conductores_model->get_conductores($config['per_page'],$comienzo);	
+        $cuerpo = $this->Conductores_model->get_conductores($config['per_page'],$comienzo, $orden);	
         $contenido=$this->load->view('conductores_view',Array('conductores'=>$cuerpo),true);
         $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 
@@ -51,7 +51,7 @@ class Conductores extends CI_Controller {
         $this->load->library('form_validation');    
             
         $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
-                
+                       
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         

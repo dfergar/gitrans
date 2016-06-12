@@ -2,16 +2,16 @@
    <?php  if($this->session->userdata('Perfil')=='admin'):?>
    <a  href="<?=site_url('Vehiculos/Crea_vehiculo')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/camion.png" width="40" aria-hidden="true"></img></a>
    <?php endif;?>
-   <table class="table">
+   <table class="table table-bordered table-striped table-condensed">
     
         <tr>
-        <th>Código</th>
-        <th>Tipo</th>
-        <th>Matrícula</th>
-        <th>Marca/Modelo</th>
-        <th>Núm Bastidor</th>
-        <th>Fecha matriculación</th>
-        <th>Próxima ITV</th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'idVehiculo')?>">Código</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'Tipo_id')?>">Tipo</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'Matricula')?>">Matrícula</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'MarcaModelo')?>">Marca/Modelo</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'Nbastidor')?>">Núm Bastidor</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'Fmatri')?>">Fecha matriculación</a></th>
+        <th><a href="<?=site_url('Vehiculos/index/0/'.'Fitv')?>">Próxima ITV</a></th>
         
     </tr>
     

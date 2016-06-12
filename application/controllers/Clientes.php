@@ -51,10 +51,20 @@ class Clientes extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');    
             
-        $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');
-                
+        $this->form_validation->set_rules('Nombre', 'Nombre','trim|required');       
+        $this->form_validation->set_rules('CIF', 'CIF', 'required|callback_valid_cif');
+        $this->form_validation->set_rules('Email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('Domicilio', 'Domicilio','required');
+        $this->form_validation->set_rules('CP', 'CP','required|numeric|exact_length[5]');
+         
+        
+        
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
+        $this->form_validation->set_message('valid_email', 'El campo %s no tiene un formato válido');
+        $this->form_validation->set_message('valid_cif', 'El campo %s no tiene un formato válido');
+        $this->form_validation->set_message('exact_length', 'El campo $s no tiene 5 digitos');
+        $this->form_validation->set_message('numeric', 'El campo %s debe ser exclusivamente numérico');
         
         
                 
@@ -153,6 +163,20 @@ class Clientes extends CI_Controller {
             
         }
     }
+    
+    public function valid_cif($str)
+    {
+        $str = trim($str);  
+        $str = str_replace("-","",$str);  
+        $str = str_ireplace(" ","",$str);
+
+        if ( !preg_match("/^[a-zA-Z]{1}[0-9]{7,8}$/" , $str) )
+        {
+                return FALSE;
+        }
+        else    return TRUE;
+    }
+        
    
 }
 ?>

@@ -109,6 +109,7 @@
                         <fieldset>
                             <legend>Cargas posteriores</legend>
                             <?php for ($i=0;$i<$_POST['ncargas'];$i++):?>
+                                <input type="hidden" name="idcarga<?=$i?>" class="form-control" value="<?=set_value('idcarga'.$i)?>">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <input type="text" style="margin-left:30px" name="carga<?=$i?>" class ="form-control" value="<?=set_value('carga'.$i)?>" size="50" readonly/>
@@ -126,10 +127,11 @@
                         </fieldset>
                     <?php endif;?>
                     <?php if($_POST['ndescargas']>0):?>
-                        <input name="ndescargas" type="hidden" value="<?=set_value('ndescargas')?>"/>
+                        <input name="ndescargas" type="hidden" value="<?=set_value('ndescargas')?>"/>         
                         <fieldset>
                             <legend>Descargas anteriores</legend>                        
                             <?php for ($i=0;$i<$_POST['ndescargas'];$i++):?>
+                                <input type="hidden" name="iddescarga<?=$i?>" class="form-control" value="<?=set_value('idcarga'.$i)?>">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <input type="text" style="margin-left:30px" name="descarga<?=$i?>" class ="form-control" value="<?=set_value('descarga'.$i)?>" size="50" readonly/>

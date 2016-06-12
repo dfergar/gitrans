@@ -7,9 +7,9 @@ class Usuarios_model extends CI_Model{
        $this->load->database();
    }
            
-   function get_usuarios($por_pagina,$segmento) 
+   function get_usuarios($por_pagina,$segmento, $orden) 
    {
-        $consulta = $this->db->query("SELECT * FROM Usuario LIMIT $segmento, $por_pagina");
+        $consulta = $this->db->query("SELECT * FROM Usuario ORDER BY $orden asc LIMIT $segmento, $por_pagina");
         $data=array();
         foreach($consulta->result() as $fila)
         {

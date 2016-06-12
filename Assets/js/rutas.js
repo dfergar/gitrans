@@ -49,7 +49,8 @@ function calculateAndDisplayRoute(directionsService, map) {
 
   directionsService.route(request, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
-      for(r=0;r<response.routes.length;r++)
+      //for(r=0;r<response.routes.length;r++) muestra varias rutas
+      for (var r=0; r<1;r++)//provisionalmente solo obtenemos la primera ruta
       {    
             new google.maps.DirectionsRenderer({
                 map: map,
@@ -62,11 +63,12 @@ function calculateAndDisplayRoute(directionsService, map) {
       var summaryPanel = document.getElementById('directions-panel');
       summaryPanel.innerHTML = '';
       //////////////////////////////////////////////////////////////////////////////
-      for (var r=0; r<response.routes.length;r++)//pruebas para obtener varias rutas
+      //for (var r=0; r<response.routes.length;r++)//pruebas para obtener varias rutas
+      for (var r=0; r<1;r++)//provisionalmente solo obtenemos la primera ruta
       {
       var route = response.routes[r];
       var ruta=r+1;
-      summaryPanel.innerHTML +='<b>RUTA '+ruta+'</b><br>';
+      //summaryPanel.innerHTML +='<b>RUTA '+ruta+'</b><br>'; provisionalmente solo obtenemos una ruta
       
       // For each route, display summary information.
       var total=0;
