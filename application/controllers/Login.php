@@ -1,11 +1,21 @@
 <?php
 class Login extends CI_Controller {
+    
+    
+     function __construct()
+   {
+       parent::__construct();
+             
+   }   
+    /**
+     * Carga de formulario login
+     */
     function index()
     {
         
         //$categorias=$this->Productos_model->get_categorias();
         //$cabecera=$this->load->view('cabecera', Array('categorias'=>$categorias), TRUE);
-        $cabecera=$this->load->view('cabecera', Array(), TRUE);
+        $cabecera=$this->load->view('cabecera2', Array(), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);         
 
         $this->load->helper(array('form', 'url'));
@@ -64,25 +74,32 @@ class Login extends CI_Controller {
         }
     }
         
-        public function ValidarUsuario()
-        {
-            
-            $user=$_POST['Usuario'];
-            //$pass=sha1($_POST['Password']);para codificar pass
-            $pass=$_POST['Password'];
-            
-                
-            if($this->Usuarios_model->ValidarUsuario($user,$pass)) return TRUE;
-            else return FALSE;
-            
-        }
+    /**
+     * Comprobación de validez del login
+     * @return boolean
+     */    
+    public function ValidarUsuario()
+    {
+
+        $user=$_POST['Usuario'];
+        //$pass=sha1($_POST['Password']);para codificar pass
+        $pass=$_POST['Password'];
+
+
+        if($this->Usuarios_model->ValidarUsuario($user,$pass)) return TRUE;
+        else return FALSE;
+
+    }
         
-        function CerrarSesion()
-        {
-            
-            session_destroy();
-            redirect('login');
-        }
+    /**
+     * Cierre de sesión
+     */
+    function CerrarSesion()
+    {
+
+        session_destroy();
+        redirect('login');
+    }
         
     
 }

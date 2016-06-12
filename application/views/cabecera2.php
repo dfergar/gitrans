@@ -11,17 +11,18 @@
 <body>
 
 
-  <div class="titulo2">
-     
+  <div class="page-header">
+      <a href="<?=site_url()?>" style="text-decoration:none;">
         
           <div class="logo">
-              <img class="logo2" src="<?=base_url()?>Assets/icons/logistica.png" aria-hidden="true">
-          </div>    
-             <span class="empresa2">GITRANS</span>
-             <span class="actividad2">Gestión Integral del Transporte</span>   
-         
+              <img class="logo" src="<?=base_url()?>Assets/icons/logistica.png" aria-hidden="true">
+          </div>
+            <div class="titulo">
+             <span class="empresa" >GITRANS</span>
+             <span class="actividad">Gestión Integral del Transporte</span>   
+            </div> 
         
-      
+      </a>
   </div>
 
 

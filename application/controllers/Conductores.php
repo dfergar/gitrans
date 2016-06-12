@@ -10,7 +10,11 @@ class Conductores extends CI_Controller {
    }
    
     
-   
+   /**
+    * Listado de conductores paginado
+    * @param type $comienzo: primer resultado de la pagina
+    * @param type $orden: campo por el cual se ordenará la consulta
+    */
    function index($comienzo=0, $orden='idConductor')
     {
 		
@@ -19,7 +23,7 @@ class Conductores extends CI_Controller {
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
         $pie=$this->load->view('pie', Array(), TRUE);   
 
-        $pages=4; //Número de registros mostrados por páginas
+        $pages=12; //Número de registros mostrados por páginas
         $this->load->library('pagination'); //Cargamos la librería de paginación
         $config['base_url'] = site_url('vehiculos/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
         $config['total_rows'] = $this->Conductores_model->filas();//calcula el número de filas  
@@ -38,7 +42,10 @@ class Conductores extends CI_Controller {
                 
                
     }
-        
+    
+    /**
+    * Creación de conductores
+    */
     function Crea_Conductor()
     {
         
@@ -83,7 +90,11 @@ class Conductores extends CI_Controller {
             
         }
     }
-        
+    
+    /**
+     * Modificar conductor
+     * @param type $id: id del conductor
+     */
     function Modifica_Conductor($id)
     {
         

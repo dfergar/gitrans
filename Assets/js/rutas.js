@@ -10,6 +10,10 @@ window.onload=function(){
 
 }
 var map;
+/**
+ * Inicialización del map
+ */
+
 function initMap() {
   var directionsService = new google.maps.DirectionsService;
   //var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -26,6 +30,11 @@ function initMap() {
     
 }
 
+/**
+ * Calculo y representación de la ruta
+ * @param {type} directionsService
+ * @param {type} map
+ */
 function calculateAndDisplayRoute(directionsService, map) {
   var waypts = [];
   var escalas = document.getElementsByClassName('waypoints');
@@ -96,7 +105,10 @@ function calculateAndDisplayRoute(directionsService, map) {
 }
 
 
-
+/**
+ * Auto borrado de elemento
+ * @param {type} elemento: elemento del DOM a borrar
+ */
 function borrar(elemento)
 {
 	
@@ -112,6 +124,11 @@ function borrar(elemento)
 	
 }
 
+/**
+ * Agragador de campos input al DOM
+ * @param {type} tipo: carga o descarga
+ * @returns {undefined}
+ */
 function agrega(tipo)
 {
     
@@ -143,6 +160,9 @@ function agrega(tipo)
     
 }
 
+/**
+ * Rutina que asignará atributos name a los campos del arbol DOM definitivo
+ */
 function nombrar()
 {
     var ncargas = [];    
@@ -166,6 +186,9 @@ function nombrar()
         
 }
 
+/**
+ * Mostrar resto de formulario
+ */
 function mostrar_form()
 {
     document.getElementById('datos').style.display = 'block';

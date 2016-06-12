@@ -7,6 +7,13 @@ class Usuarios_model extends CI_Model{
        $this->load->database();
    }
            
+   /**
+    * Consulta de los usuarios paginada
+    * @param type $por_pagina: nuemero de registros por página
+    * @param type $segmento: sergmento de la url usado por la paginación
+    * @param type $orden: campo por el cual se ordenará la consulta
+    * @return type: array con los datos de los usuarios
+    */
    function get_usuarios($por_pagina,$segmento, $orden) 
    {
         $consulta = $this->db->query("SELECT * FROM Usuario ORDER BY $orden asc LIMIT $segmento, $por_pagina");
@@ -27,6 +34,10 @@ class Usuarios_model extends CI_Model{
             return  $consulta->row()->filas;
     }
     
+    /**
+     * Consulta de provincias
+     * @return type: array con las provincias
+     */
     function get_provincias()
     {
         $consulta = $this->db->query("select cod, nombre from tbl_provincias");
@@ -38,6 +49,12 @@ class Usuarios_model extends CI_Model{
         return $provincias;
     }
         
+    /**
+     * Consulta de usuario y su password
+     * @param type $user: usuario
+     * @param type $password: password
+     * @return type: fila con los datos del usuario
+     */
     function ValidarUsuario($user,$password)
     {         //   Consulta Mysql para buscar en la tabla Usuario aquellos usuarios que coincidan con el mail y password ingresados en pantalla de login
         $query = $this->db->where('Usuario',$user);   //   La consulta se efectúa mediante Active Record. Una manera alternativa, y en lenguaje más sencillo, de generar las consultas Sql.
@@ -47,6 +64,11 @@ class Usuarios_model extends CI_Model{
         return $query->row();    //   Devolvemos al controlador la fila que coincide con la búsqueda. (FALSE en caso que no existir coincidencias)
     }
    
+    /**
+     * Consulta de un usuario
+     * @param type $usuario: usuario
+     * @return type: fila con los datos del usuario
+     */
     function ExisteUsuario($usuario)
     {
         $query = $this->db->where('Usuario',$usuario);  
@@ -56,11 +78,20 @@ class Usuarios_model extends CI_Model{
    
    
    
+    /**
+     * Iserción de usuarios
+     * @param type $data: datos del usuario
+     */
     public function Insert_Usuario($data)
     {
         $this->db->insert('Usuario', $data);
     }
     
+    /**
+     * Consulta de usuario
+     * @param type $usuario
+     * @return type: fila con los datos del usuario
+     */
     public function GetUsuario($usuario)
     {
         $consulta = $this->db->query("SELECT * FROM Usuario WHERE Usuario='$usuario'");
@@ -68,30 +99,53 @@ class Usuarios_model extends CI_Model{
        
     }
     
+    /**
+     * Modificar usuario
+     * @param type $id: id del usuario
+     * @param type $data: array con los datos del usuario
+     */
     public function Update_Usuario($id, $data)
     {
         $this->db->where('idUsuario', $id);
         $this->db->update('Usuario', $data);
     }
     
+    /**
+     * Borrado de usuario
+     * @param type $id: id del usuario
+     */
     public function DeleteUsuario($id)
     {
         $this->db->delete('Usuario', array('idUsuario' => $id));
     }
         
-    
+    /**
+     * Cambio de password
+     * @param type $user: usuario
+     * @param type $pass: password
+     */
     function SetPassword($user, $pass)
     {
         $this->db->query("UPDATE Usuario SET Password='$pass' WHERE Usuario='$user'");
     }
     
+    /**
+     * Consulta de provincias
+     * @param type $id: id del suario
+     * @return type: fila con los datos de la provincia
+     */
     function get_provincia($id)
     {
         $consulta = $this->db->query("SELECT * FROM tbl_provincias WHERE cod=$id");
         return $consulta->row()->nombre;
     }
     
-     function get_usuario($id)
+     /**
+     * Consulta de usuario
+     * @param type $usuario: id del usuario
+     * @return type: fila con los datos del usuario
+     */
+    function get_usuario($id)
     {
         $consulta = $this->db->query("SELECT * FROM Usuario WHERE idUsuario='$id'");
         return $consulta->row();

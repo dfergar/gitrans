@@ -10,7 +10,11 @@ class Usuarios extends CI_Controller {
    }
    
     
-   
+   /**
+    * Listado de usuarios paginado
+    * @param type $comienzo: primer resultado de la pagina
+    * @param type $orden: campo por el cual se ordenará la consulta
+    */
    function index($comienzo=0, $orden="idUsuario")
 	{
 		
@@ -19,7 +23,7 @@ class Usuarios extends CI_Controller {
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);   
      
-                $pages=4; //Número de registros mostrados por páginas
+                $pages=12; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
 		$config['base_url'] = site_url('usuarios/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
 		$config['total_rows'] = $this->Usuarios_model->filas();//calcula el número de filas  
@@ -39,7 +43,10 @@ class Usuarios extends CI_Controller {
                
 	}
         
-        function Crea_Usuario()
+    /**
+    * Creación de usuarios
+    */
+    function Crea_Usuario()
     {
         
                 
@@ -88,7 +95,11 @@ class Usuarios extends CI_Controller {
             
         }
     }
-        
+     
+    /**
+     * Modificar usuario
+     * @param type $id: id del usuario
+     */
     function Modifica_Usuario($id)
     {
         
@@ -149,6 +160,11 @@ class Usuarios extends CI_Controller {
         }
     }
     
+    /**
+     * Comprobador de existencia de usuario para evitar duplicación del mismo
+     * @param type $user: usuario
+     * @return boolean
+     */
     public function ExisteUsuario($user)
     {
 

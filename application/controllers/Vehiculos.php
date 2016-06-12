@@ -10,7 +10,11 @@ class Vehiculos extends CI_Controller {
    }
    
     
-   
+   /**
+    * Listado de vehiculos paginado
+    * @param type $comienzo: primer resultado de la pagina
+    * @param type $orden: campo por el cual se ordenará la consulta
+    */
    function index($comienzo=0, $orden="idVehiculo")
 	{
 		
@@ -19,7 +23,7 @@ class Vehiculos extends CI_Controller {
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);   
      
-                $pages=4; //Número de registros mostrados por páginas
+                $pages=12; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
 		$config['base_url'] = site_url('vehiculos/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
 		$config['total_rows'] = $this->Vehiculos_model->filas();//calcula el número de filas  
@@ -38,8 +42,10 @@ class Vehiculos extends CI_Controller {
                 
                
 	}
-        
-        function Crea_Vehiculo()
+    /**
+     * Crear vehículo
+     */    
+    function Crea_Vehiculo()
     {
         
                 
@@ -87,7 +93,11 @@ class Vehiculos extends CI_Controller {
             
         }
     }
-        
+    
+    /**
+     * Modificar vehículo
+     * @param type $id: id del vehículo
+     */
     function Modifica_Vehiculo($id)
     {
         
@@ -147,6 +157,11 @@ class Vehiculos extends CI_Controller {
         }
     }
     
+    /**
+     * Comprobador de validez de ITV
+     * @param type $fecha
+     * @return boolean
+     */
     function itv_caducada($fecha)
     {
         if($fecha<=now())

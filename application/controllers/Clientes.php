@@ -11,7 +11,11 @@ class Clientes extends CI_Controller {
    }
    
     
-   
+   /**
+    * Listado de clientes paginado
+    * @param type $comienzo: primer resultado de la pagina
+    * @param type $orden: campo por el cual se ordenará la consulta
+    */
    function index($comienzo=0, $orden='idCliente')
 	{
 		
@@ -40,7 +44,10 @@ class Clientes extends CI_Controller {
                
 	}
    
-   function Crea_Cliente()
+   /**
+    * Creación de clientes
+    */
+        function Crea_Cliente()
     {
         
                 
@@ -100,6 +107,10 @@ class Clientes extends CI_Controller {
         }
     }
         
+    /**
+     * Modificar cliente
+     * @param type $id: id del cliente
+     */
     function Modifica_Cliente($id)
     {
         
@@ -164,6 +175,11 @@ class Clientes extends CI_Controller {
         }
     }
     
+    /**
+     * Comprobador de formato de CIF de empresa
+     * @param type $str: cadena correspondiente al CIF
+     * @return boolean
+     */
     public function valid_cif($str)
     {
         $str = trim($str);  

@@ -11,7 +11,7 @@ class Estadisticas extends CI_Controller {
    }
    
     
-   
+   //En construcción
    function index()
 	{
 		

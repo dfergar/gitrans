@@ -10,7 +10,11 @@ class Viajes extends CI_Controller {
    }
    
     
-   
+   /**
+    * Listado de visjes paginado
+    * @param type $comienzo: primer resultado de la pagina
+    * @param type $orden: campo por el cual se ordenará la consulta
+    */
    function index($comienzo=0, $orden="FechaOrigen")
 	{
 		
@@ -19,7 +23,7 @@ class Viajes extends CI_Controller {
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);               
      
-                $pages=9; //Número de registros mostrados por páginas
+                $pages=12; //Número de registros mostrados por páginas
 		$this->load->library('pagination'); //Cargamos la librería de paginación
 		$config['base_url'] = site_url('viajes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
 		$config['total_rows'] = $this->Viajes_model->filas();//calcula el número de filas  
@@ -39,6 +43,10 @@ class Viajes extends CI_Controller {
                
 	}
         
+   /**
+    * Ver un viaje en detalle
+    * @param type $id: id del viaje
+    */
    Function Ver_viaje($id)
    {
                 $categoria="Viajes";                
@@ -52,6 +60,9 @@ class Viajes extends CI_Controller {
                 
    }
    
+   /**
+    * Crear un viaje
+    */
    function Crea_ruta()
    {
         $categoria="Viajes";
@@ -136,8 +147,12 @@ class Viajes extends CI_Controller {
         
        
     }
-    
-    function Modifica_ruta($id)
+   
+   /**
+    * Modificar un viaje
+    * @param type $id: id del viaje
+    */ 
+   function Modifica_ruta($id)
    {
         $categoria="Viajes";
         $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
@@ -231,9 +246,10 @@ class Viajes extends CI_Controller {
                 'Observaciones' => $_POST['Observaciones']
             );
             
+            //Inserción de datos del viaje
             $this->Viajes_model->Update_Viaje($id, $datos);
             
-            
+            //Inserción de cargas
             for ($i=0;$i<$_POST['ncargas'];$i++)
             {
                 $idcarga=$_POST['idcarga'.$i];
@@ -245,6 +261,7 @@ class Viajes extends CI_Controller {
                 $this->Viajes_model->Update_Carga($idcarga,$data);
                 
             }
+            //Iserción de descargas
             for ($i=0;$i<$_POST['ndescargas'];$i++)
             {
                 $iddescarga=$_POST['iddescarga'.$i];
@@ -266,6 +283,10 @@ class Viajes extends CI_Controller {
        
     }
     
+    /**
+     * Mdificar el estado de un viaje(perfil conductor)
+     * @param type $id: id del viaje
+     */
     function Modifica_estado($id)
     {
         $categoria="Viajes";
