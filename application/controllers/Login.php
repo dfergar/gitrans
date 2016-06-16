@@ -62,7 +62,7 @@ class Login extends CI_Controller {
             {
                 case 'admin': redirect('viajes');
                     break;
-                case 'Conductor': redirect('vehiculos');
+                case 'Conductor': redirect('viajes');
                     break;
                 case 'Operador': redirect('viajes');
                     break;

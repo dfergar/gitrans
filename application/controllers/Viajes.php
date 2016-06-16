@@ -11,11 +11,45 @@ class Viajes extends CI_Controller {
    
     
    /**
-    * Listado de visjes paginado
+    * Listado de visjes paginado de viajes no facturados
     * @param type $comienzo: primer resultado de la pagina
     * @param type $orden: campo por el cual se ordenará la consulta
     */
-   function index($comienzo=0, $orden="FechaOrigen")
+   function index($comienzo=0, $orden="FechaOrigen", $sentido="desc")
+	{
+		
+                
+                $categoria="Viajes";
+                
+                $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
+                $pie=$this->load->view('pie', Array(), TRUE);               
+     
+                $pages=12; //Número de registros mostrados por páginas
+		$this->load->library('pagination'); //Cargamos la librería de paginación
+		$config['base_url'] = site_url('viajes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
+		$config['total_rows'] = $this->Viajes_model->filas();//calcula el número de filas  
+		$config['per_page'] = $pages; //Número de registros mostrados por páginas
+                $config['num_links'] = 20; //Número de links mostrados en la paginación
+ 		$config['first_link'] = 'Primera';//primer link
+		$config['last_link'] = 'Última';//último link
+                $config["uri_segment"] = 3;//el segmento de la paginación
+		$config['next_link'] = 'Siguiente';//siguiente link
+		$config['prev_link'] = 'Anterior';//anterior link
+		$this->pagination->initialize($config); //inicializamos la paginación
+                
+		$cuerpo = $this->Viajes_model->get_viajes($config['per_page'],$comienzo, $orden, $sentido);	
+                $contenido=$this->load->view('viajes_view',Array('viajes'=>$cuerpo,'sentido'=>$sentido),true);
+                $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+                
+               
+	}
+        
+        /**
+         * Listado de visjes paginado de viajes facturados
+        * @param type $comienzo: primer resultado de la pagina
+        * @param type $orden: campo por el cual se ordenará la consulta
+         */
+        function facturados($comienzo=0, $orden="FechaOrigen", $sentido="desc")
 	{
 		
                 
@@ -36,8 +70,36 @@ class Viajes extends CI_Controller {
 		$config['prev_link'] = 'Anterior';//anterior link
 		$this->pagination->initialize($config); //inicializamos la paginación
                 
-		$cuerpo = $this->Viajes_model->get_viajes($config['per_page'],$comienzo, $orden);	
-                $contenido=$this->load->view('viajes_view',Array('viajes'=>$cuerpo),true);
+		$cuerpo = $this->Viajes_model->get_viajes_facturados($config['per_page'],$comienzo, $orden);	
+                $contenido=$this->load->view('viajes_view',Array('viajes'=>$cuerpo,'sentido'=>$sentido),true);
+                $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
+                
+               
+	}
+        
+        function anulados($comienzo=0, $orden="FechaOrigen", $sentido="desc")
+	{
+		
+                
+                $categoria="Viajes";
+                $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
+                $pie=$this->load->view('pie', Array(), TRUE);               
+     
+                $pages=12; //Número de registros mostrados por páginas
+		$this->load->library('pagination'); //Cargamos la librería de paginación
+		$config['base_url'] = site_url('viajes/index'); // parametro base de la aplicación, si tenemos un .htaccess nos evitamos el index.php
+		$config['total_rows'] = $this->Viajes_model->filas();//calcula el número de filas  
+		$config['per_page'] = $pages; //Número de registros mostrados por páginas
+                $config['num_links'] = 20; //Número de links mostrados en la paginación
+ 		$config['first_link'] = 'Primera';//primer link
+		$config['last_link'] = 'Última';//último link
+                $config["uri_segment"] = 3;//el segmento de la paginación
+		$config['next_link'] = 'Siguiente';//siguiente link
+		$config['prev_link'] = 'Anterior';//anterior link
+		$this->pagination->initialize($config); //inicializamos la paginación
+                
+		$cuerpo = $this->Viajes_model->get_viajes_anulados($config['per_page'],$comienzo, $orden);	
+                $contenido=$this->load->view('viajes_view',Array('viajes'=>$cuerpo,'sentido'=>$sentido),true);
                 $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
                 
                
@@ -49,7 +111,7 @@ class Viajes extends CI_Controller {
     */
    Function Ver_viaje($id)
    {
-                $categoria="Viajes";                
+                $categoria="Viajes";                 
                 $cabecera=$this->load->view('cabecera', Array('categoria'=>$categoria), TRUE);
                 $pie=$this->load->view('pie', Array(), TRUE);  
                 $viaje=$this->Viajes_model->get_viaje($id);
@@ -75,12 +137,13 @@ class Viajes extends CI_Controller {
         
         $this->form_validation->set_rules('Precio', 'Precio','trim|required|numeric');
         $this->form_validation->set_rules('fechaorigen', 'Fecha de llegada al origen del viaje','trim|required');
+        $this->form_validation->set_rules('fechadestino', 'Fecha de llegada al destino del viaje','trim|required');
         
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('numeric', 'El campo %s debe ser numérico');
         
-        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO');
+        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO','FACTURADO','ANULADO');
         
                
         
@@ -164,12 +227,13 @@ class Viajes extends CI_Controller {
         
         $this->form_validation->set_rules('Precio', 'Precio','trim|required|numeric');
         $this->form_validation->set_rules('fechaorigen', 'Fecha de llegada al origen del viaje','trim|required');
+        $this->form_validation->set_rules('fechadestino', 'Fecha de llegada al destino del viaje','trim|required');
         
         
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
         $this->form_validation->set_message('numeric', 'El campo %s debe ser numérico');
         
-        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO');
+        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO','FACTURADO','ANULADO');
         
         if(!$_POST)
         {
@@ -304,7 +368,7 @@ class Viajes extends CI_Controller {
         $this->form_validation->set_message('required', 'El campo %s es obligatorio');
        
         
-        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO');
+        $estados=array('REGISTRADO','EN RUTA HACIA CARGA','CARGANDO','EN RUTA HACIA DESCARGA','DESCARGANDO','FINALIZADO','FACTURADO');
         
         if(!$_POST)
         {

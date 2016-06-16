@@ -1,23 +1,25 @@
 <div class="cuerpo">
     <?php  if($this->session->userdata('Perfil')=='admin'):?>
     <a  href="<?=site_url('Viajes/Crea_ruta')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/rutas.png" width="40" aria-hidden="true"></img></a>
-    <?php endif;?>
+    <a class="btn btn-primary" href="<?=site_url('Viajes/facturados')?>"><span>FACTURADOS</span></a>
+    <a class="btn btn-primary" href="<?=site_url('Viajes/anulados')?>"><span>ANULADOS</span></a>
+        <?php endif;?>
 
 <table class="table table-bordered table-striped table-condensed">
     
         <tr>
-            <th><a href="<?=site_url('Viajes/index/0/'.'idViaje')?>">Viaje</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'FechaOrigen')?>">Fecha</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Tractora_id')?>">Tractora</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Remolque_id')?>">Remolque</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Conductor1_id')?>">Chófer 1</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Conductor2_id')?>">Chófer 2</th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Origen')?>">Origen</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Destino')?>">Destino</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'KM')?>">Km</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Cliente_id')?>">Cliente</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Precio')?>">Precio</a></th>
-            <th><a href="<?=site_url('Viajes/index/0/'.'Origen')?>">Estado</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'idViaje/desc'):site_url('Viajes/index/0/'.'idViaje/asc')?>">Viaje</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'FechaOrigen/desc'):site_url('Viajes/index/0/'.'FechaOrigen/asc')?>">Fecha</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Tractora_id/desc'):site_url('Viajes/index/0/'.'Tractora_id/asc')?>">Tractora</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Remolque_id/desc'):site_url('Viajes/index/0/'.'Remolque_id/asc')?>">Remolque</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor1_id/desc'):site_url('Viajes/index/0/'.'Conductor1_id/asc')?>">Chófer1</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor2_id/desc'):site_url('Viajes/index/0/'.'Conductor2_id/asc')?>">Chófer2</th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Origen</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Destino/desc'):site_url('Viajes/index/0/'.'Destino/asc')?>">Destino</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'KM/desc'):site_url('Viajes/index/0/'.'KM/asc')?>">Km</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Cliente_id/desc'):site_url('Viajes/index/0/'.'Cliente_id/asc')?>">Cliente</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Precio/desc'):site_url('Viajes/index/0/'.'Precio/asc')?>">Precio</a></th>
+            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Estado</a></th>
         
     </tr>
     
@@ -27,7 +29,7 @@
     
     <tr>
         <td><?=$items->idViaje ?></td>
-        <td><?=date("d-m-Y", strtotime($items->FechaOrigen))?></td>
+        <td nowrap><?=date("d-m-y", strtotime($items->FechaOrigen))?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Tractora_id)->Matricula ?></td>
         <td><?=$this->Viajes_model->get_vehiculo($items->Remolque_id)->Matricula ?></td>
         <td><?=$this->Conductores_model->get_conductor($items->Conductor1_id)->Nombre ?></td>         

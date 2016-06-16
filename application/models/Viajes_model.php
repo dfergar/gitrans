@@ -9,15 +9,44 @@ class Viajes_model extends CI_Model{
    }
            
    /**
-    * Consulta de viajes
+    * Consulta de viajes no facturados
     * @param type $por_pagina: elementos por página
     * @param type $segmento: segmento de la url usado por la paginación
     * @param type $orden: campo por el cual se ordenará la consulta
     * @return type: datos con los viajes
     */
-   function get_viajes($por_pagina,$segmento,$orden) 
+   function get_viajes($por_pagina,$segmento,$orden, $sentido) 
    {
-        $consulta = $this->db->query("SELECT * FROM Viaje ORDER BY $orden DESC LIMIT $segmento, $por_pagina");
+        $consulta = $this->db->query("SELECT * FROM Viaje WHERE Estado!='FACTURADO' AND Estado!='ANULADO' ORDER BY $orden $sentido LIMIT $segmento, $por_pagina");
+        $data=array();
+        foreach($consulta->result() as $fila)
+        {
+            $data[] = $fila;
+        }
+        return $data; 
+   }
+   
+   /**
+    * Consulta de viajes facturados
+    * @param type $por_pagina: elementos por página
+    * @param type $segmento: segmento de la url usado por la paginación
+    * @param type $orden: campo por el cual se ordenará la consulta
+    * @return type: datos con los viajes
+    */
+   function get_viajes_facturados($por_pagina,$segmento,$orden) 
+   {
+        $consulta = $this->db->query("SELECT * FROM Viaje WHERE Estado='FACTURADO' ORDER BY $orden DESC LIMIT $segmento, $por_pagina");
+        $data=array();
+        foreach($consulta->result() as $fila)
+        {
+            $data[] = $fila;
+        }
+        return $data; 
+   }
+   
+   function get_viajes_anulados($por_pagina,$segmento,$orden) 
+   {
+        $consulta = $this->db->query("SELECT * FROM Viaje WHERE Estado='ANULADO' ORDER BY $orden DESC LIMIT $segmento, $por_pagina");
         $data=array();
         foreach($consulta->result() as $fila)
         {
@@ -234,6 +263,8 @@ class Viajes_model extends CI_Model{
             $consulta = $this->db->query("SELECT count(*) as filas FROM Viaje");
             return  $consulta->row()->filas ;
     }
+    
+   
    
    
    

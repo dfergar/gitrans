@@ -67,7 +67,7 @@ class Usuarios extends CI_Controller {
         $this->form_validation->set_message('min_length', 'El campo %s debe teneres un mínimo de 5 caracteres');
         $this->form_validation->set_message('max_length', 'El campo %s debe teneres un máximo de 12 caracteres');        
               
-        $perfiles=array('Operador','Conductor','admin');
+        $perfiles=array('Operador'=>'OPERADOR','Conductor'=>'CONDUCTOR','admin'=>'ADMIN');
                 
         if ($this->form_validation->run() == FALSE)
         {
@@ -120,7 +120,7 @@ class Usuarios extends CI_Controller {
             
         }
         
-       $this->form_validation->set_rules('Usuario', 'Usuario','trim|required|min_length[5]|max_length[12]|callback_ExisteUsuario');
+       $this->form_validation->set_rules('Usuario', 'Usuario','trim|required|min_length[5]|max_length[12]');
         $this->form_validation->set_rules('Perfil', 'Perfil','trim|required');
         $this->form_validation->set_rules('Password', 'Contraseña','trim|required');
                 
@@ -130,12 +130,12 @@ class Usuarios extends CI_Controller {
         $this->form_validation->set_message('min_length', 'El campo %s debe teneres un mínimo de 5 caracteres');
         $this->form_validation->set_message('max_length', 'El campo %s debe teneres un máximo de 12 caracteres');        
               
-        
+        $perfiles=array('Operador'=>'OPERADOR','Conductor'=>'CONDUCTOR','admin'=>'ADMIN');
         
                 
         if ($this->form_validation->run() == FALSE)
         {
-            $contenido=$this->load->view('crea_usuario_view',Array(),true);
+            $contenido=$this->load->view('crea_usuario_view',Array('perfiles'=>$perfiles),true);
             $this->load->view('plantilla_view',Array('cabecera'=>$cabecera, 'contenido'=>$contenido,'pie'=>$pie));
             
         }
