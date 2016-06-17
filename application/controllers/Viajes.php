@@ -202,7 +202,7 @@ class Viajes extends CI_Controller {
             }
             
             
-            redirect('viajes');
+            redirect('viajes/Ver_viaje/'.$id);
             
            
             
@@ -338,7 +338,7 @@ class Viajes extends CI_Controller {
             }
             
             
-            redirect('viajes');
+           redirect('viajes/Ver_viaje/'.$id);
             
            
             
@@ -400,7 +400,7 @@ class Viajes extends CI_Controller {
            
             
             
-            redirect('viajes');
+            redirect('viajes/Ver_viaje/'.$id);
         }
     
    

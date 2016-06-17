@@ -1,5 +1,5 @@
 <div class="cuerpo">
-    <?php  if($this->session->userdata('Perfil')=='admin'):?>
+    <?php  if($this->session->userdata('Perfil')=='admin'||$this->session->userdata('Perfil')=='Operador'):?>
     <a  href="<?=site_url('Viajes/Crea_ruta')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/rutas.png" width="40" aria-hidden="true"></img></a>
     <a class="btn btn-primary" href="<?=site_url('Viajes/facturados')?>"><span>FACTURADOS</span></a>
     <a class="btn btn-primary" href="<?=site_url('Viajes/anulados')?>"><span>ANULADOS</span></a>
@@ -8,18 +8,18 @@
 <table class="table table-bordered table-striped table-condensed">
     
         <tr>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'idViaje/desc'):site_url('Viajes/index/0/'.'idViaje/asc')?>">Viaje</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'FechaOrigen/desc'):site_url('Viajes/index/0/'.'FechaOrigen/asc')?>">Fecha</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Tractora_id/desc'):site_url('Viajes/index/0/'.'Tractora_id/asc')?>">Tractora</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Remolque_id/desc'):site_url('Viajes/index/0/'.'Remolque_id/asc')?>">Remolque</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor1_id/desc'):site_url('Viajes/index/0/'.'Conductor1_id/asc')?>">Chófer1</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor2_id/desc'):site_url('Viajes/index/0/'.'Conductor2_id/asc')?>">Chófer2</th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Origen</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Destino/desc'):site_url('Viajes/index/0/'.'Destino/asc')?>">Destino</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'KM/desc'):site_url('Viajes/index/0/'.'KM/asc')?>">Km</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Cliente_id/desc'):site_url('Viajes/index/0/'.'Cliente_id/asc')?>">Cliente</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Precio/desc'):site_url('Viajes/index/0/'.'Precio/asc')?>">Precio</a></th>
-            <th><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Estado</a></th>
+            <th width="3%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'idViaje/desc'):site_url('Viajes/index/0/'.'idViaje/asc')?>">Viaje</a></th>
+            <th width="7%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'FechaOrigen/desc'):site_url('Viajes/index/0/'.'FechaOrigen/asc')?>">Fecha</a></th>
+            <th width="7%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Tractora_id/desc'):site_url('Viajes/index/0/'.'Tractora_id/asc')?>">Tractora</a></th>
+            <th width="7%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Remolque_id/desc'):site_url('Viajes/index/0/'.'Remolque_id/asc')?>">Remolque</a></th>
+            <th width="7%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor1_id/desc'):site_url('Viajes/index/0/'.'Conductor1_id/asc')?>">Chófer1</a></th>
+            <th width="7%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Conductor2_id/desc'):site_url('Viajes/index/0/'.'Conductor2_id/asc')?>">Chófer2</th>
+            <th width="15%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Origen</a></th>
+            <th width="15%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Destino/desc'):site_url('Viajes/index/0/'.'Destino/asc')?>">Destino</a></th>
+            <th width="3%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'KM/desc'):site_url('Viajes/index/0/'.'KM/asc')?>">Km</a></th>
+            <th width="15%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Cliente_id/desc'):site_url('Viajes/index/0/'.'Cliente_id/asc')?>">Cliente</a></th>
+            <th width="6%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Precio/desc'):site_url('Viajes/index/0/'.'Precio/asc')?>">Precio</a></th>
+            <th width="8%"><a href="<?=$sentido=='asc'?site_url('Viajes/index/0/'.'Origen/desc'):site_url('Viajes/index/0/'.'Origen/asc')?>">Estado</a></th>
         
     </tr>
     

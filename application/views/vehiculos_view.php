@@ -1,5 +1,5 @@
 <div class="cuerpo">
-   <?php  if($this->session->userdata('Perfil')=='admin'):?>
+   <?php  if($this->session->userdata('Perfil')=='admin' || $this->session->userdata('Perfil')=='Mecanico'):?>
    <a  href="<?=site_url('Vehiculos/Crea_vehiculo')?>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><img src="<?=base_url()?>Assets/icons/camion.png" width="40" aria-hidden="true"></img></a>
    <?php endif;?>
    <table class="table table-bordered table-striped table-condensed">
@@ -27,7 +27,7 @@
         <td><?=$items->Nbastidor ?></td>
         <td><?=date("d-m-Y", strtotime($items->Fmatri)); ?></td>
         <td <?php if($items->Fitv<=date("Y-m-d",now())):?>class="parpadea"<?php endif;?>><?=date("d-m-Y", strtotime($items->Fitv)); ?></td>
-        <?php  if($this->session->userdata('Perfil')=='admin'):?>
+        <?php  if($this->session->userdata('Perfil')=='admin' || $this->session->userdata('Perfil')=='Mecanico'):?>
         <td><a class="btn btn-danger" href="<?=site_url('Vehiculos/Modifica_vehiculo/'.$items->idVehiculo)?>"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
         <?php endif;?>
     </tr>

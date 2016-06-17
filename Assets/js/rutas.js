@@ -16,14 +16,14 @@ var map;
 
 function initMap() {
   var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
+  //var directionsDisplay = new google.maps.DirectionsRenderer;
   
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 6,
     center: {lat: 40.429507, lng: -3.708384}
   });
-  directionsDisplay.setMap(map);
-  directionsDisplay.setPanel(document.getElementById("directions-panel"));
+  //directionsDisplay.setMap(map);
+  //directionsDisplay.setPanel(document.getElementById("directions-panel"));
   document.getElementById('submit').addEventListener('click', function() {
     calculateAndDisplayRoute(directionsService, map);
   }); 
@@ -67,7 +67,7 @@ function calculateAndDisplayRoute(directionsService, map) {
                 routeIndex: r,
                 
             });
-            directionsDisplay.setDirections(response);
+            //directionsDisplay.setDirections(response);
       }
       var summaryPanel = document.getElementById('directions-panel');
       summaryPanel.innerHTML = '';

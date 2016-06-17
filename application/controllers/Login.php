@@ -66,9 +66,10 @@ class Login extends CI_Controller {
                     break;
                 case 'Operador': redirect('viajes');
                     break;
+                case 'Mecanico': redirect('vehiculos');
+                    break;
                
-                //$data['title'] = 'Administrador'; 
-                //$data['user'] = $username;  // = $this->session->userdata('user');
+                
             }
             
         }

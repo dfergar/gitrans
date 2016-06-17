@@ -1,5 +1,7 @@
 * {
    font-family: Open Sans; 
+   -moz-user-select: none;
+   -webkit-user-select: none;
 } 
 body{
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,ddf1f9+35,a0d8ef+100;Blue+3D+%2318 */

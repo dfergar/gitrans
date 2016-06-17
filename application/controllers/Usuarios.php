@@ -67,7 +67,7 @@ class Usuarios extends CI_Controller {
         $this->form_validation->set_message('min_length', 'El campo %s debe teneres un mínimo de 5 caracteres');
         $this->form_validation->set_message('max_length', 'El campo %s debe teneres un máximo de 12 caracteres');        
               
-        $perfiles=array('Operador'=>'OPERADOR','Conductor'=>'CONDUCTOR','admin'=>'ADMIN');
+        $perfiles=array('Operador'=>'OPERADOR','Conductor'=>'CONDUCTOR','admin'=>'ADMIN', 'Mecanico'=>'MECANICO');
                 
         if ($this->form_validation->run() == FALSE)
         {
